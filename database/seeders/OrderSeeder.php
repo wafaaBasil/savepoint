@@ -17,7 +17,7 @@ class OrderSeeder extends Seeder
              Order::create([
                 'customer_id' => 2,
                 'provider_id' => 1,
-                'delivery_id' => 15,
+                'delivery_id' => 17,
                 'order_price' => 1300,
                 'delivery_price' => 20,
                 'total' => 1500,
@@ -29,7 +29,7 @@ class OrderSeeder extends Seeder
             Order::create([
                 'customer_id' => 2,
                 'provider_id' => 1,
-                'delivery_id' => 15,
+                'delivery_id' => 17,
                 'order_price' => 1300,
                 'delivery_price' => 20,
                 'total' => 1500,
@@ -41,7 +41,7 @@ class OrderSeeder extends Seeder
             Order::create([
                 'customer_id' => 2,
                 'provider_id' => 1,
-                'delivery_id' => 15,
+                'delivery_id' => 17,
                 'order_price' => 1300,
                 'delivery_price' => 20,
                 'total' => 1500,

@@ -26,8 +26,7 @@ use App\Http\Controllers\API\AdminDashboard\DeliveryController;
         Route::controller(DeliveryController::class)->group(function () {
             Route::get('deliveries', 'index');
             Route::get('delivery/{id}', 'details');
-            Route::get('delete-delivery/{id}', 'delete');
-            Route::get('deactivate-delivery/{id}', 'deactive');
+            Route::get('{status}-delivery/{id}', 'status');
         });
 
     })->middleware('auth:api');
