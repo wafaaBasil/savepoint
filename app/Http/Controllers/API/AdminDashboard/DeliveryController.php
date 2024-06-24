@@ -56,7 +56,7 @@ class DeliveryController extends BaseController
     public function status($id, $status)
     {
         $user = User::find($id);
-       
+       dd($user);
         if(is_null($user)|| $user->user_type != 'delivery'){
             return $this->sendError('المندوب غير موجود','Delivery not Found!',404);
         }
