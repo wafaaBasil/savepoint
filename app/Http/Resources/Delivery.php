@@ -35,7 +35,7 @@ class Delivery extends JsonResource
                 Carbon::parse($this->last_login_at)->diffForHumans() :
                 'لم يقم بتسجيل الدخول من قبل',
             'created_at' =>Carbon::parse($this->created_at)->isoFormat('YYYY/D ، MMMM'),
-            'order_count' => 0,
+            'order_count' => $this->delivery_order->count(),
             'points' => 0,
             'reward_balance' => 0,
         ];
