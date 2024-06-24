@@ -33,13 +33,18 @@ class DeliveryController extends BaseController
     public function details(Request $request, $id)
     {
        $user = User::find($id);
+       
+       if(is_null($user)|| $user->user_type != 'delivery'){
+            return $this->sendError('المندوب غير موجود','Delivery not Found!',404);
+        }
+
        if($request->page == null){
-        $orders = $user->delivery_orders;
-        $page_count = null;
-    }else{
-        $orders = $user->delivery_orders->paginate(10);
-        $page_count = $orders->lastPage();
-    }
+            $orders = $user->delivery_orders;
+            $page_count = null;
+        }else{
+            $orders = $user->delivery_orders()->paginate(10);
+            $page_count = $orders->lastPage();
+        }
         
         $success['delivery']=new DeliveryResource($user);
         $success['orders']=OrderResource::collection($orders);
@@ -55,6 +60,7 @@ class DeliveryController extends BaseController
         if(is_null($user)|| $user->user_type != 'delivery'){
             return $this->sendError('المندوب غير موجود','Delivery not Found!',404);
         }
+
         if($status == 'delete'){
            
             $user->delete();

@@ -34,14 +34,19 @@ class CustomerController extends BaseController
     public function details(Request $request, $id)
     {
        $user = User::find($id);
+       
+       if(is_null($user)|| $user->user_type != 'customer'){
+            return $this->sendError('العميل غير موجود','Customer not Found!',404);
+        }
+
        if($request->page == null){
-        $orders = $user->customer_orders();
-        $page_count = null;
-    }else{
-        $orders = $user->customer_orders()->paginate(10);
-        $page_count = $orders->lastPage();
-    }
-        
+            $orders = $user->customer_orders;
+            $page_count = null;
+        }else{
+            $orders = $user->customer_orders()->paginate(10);
+            $page_count = $orders->lastPage();
+        }
+            
         //dd($orders);
         $success['customer']=new UserResource($user);
         $success['orders']=OrderResource::collection($orders);
