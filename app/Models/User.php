@@ -80,4 +80,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Order::class,'customer_id');
     }
+
+    public function delivery_orders(): HasMany
+    {
+        return $this->hasMany(Order::class,'delivery_id');
+    }
 }
