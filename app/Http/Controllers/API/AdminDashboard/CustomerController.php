@@ -13,8 +13,6 @@ use App\Http\Controllers\API\BaseController as BaseController;
 
 class CustomerController extends BaseController
 {
-   
-    
     public function index(Request $request)
     {
         if($request->page == null){
@@ -33,7 +31,7 @@ class CustomerController extends BaseController
          return $this->sendResponse($success,'تم ارجاع العملاء بنجاح','Customers returned successfully');
     }
 
-    public function details($id,Request $request)
+    public function details(Request $request, $id)
     {
        $user = User::find($id);
        if($request->page == null){
@@ -56,7 +54,7 @@ class CustomerController extends BaseController
     {
         $user = User::find($id);
        
-        if(is_null($user)){
+        if(is_null($user)|| $user->user_type != 'customer'){
             return $this->sendError('العميل غير موجود','Customer not Found!',404);
         }
         if($status == 'delete'){
@@ -82,7 +80,7 @@ class CustomerController extends BaseController
         }else{
             
             return $this->sendError('الصفحة غير موجودة','Page not Found!',404);
-            
+
         }
         
         
