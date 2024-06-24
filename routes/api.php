@@ -1,0 +1,33 @@
+<?php
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\AdminDashboard\CustomerController;
+use App\Http\Controllers\API\AdminDashboard\DeliveryController;
+
+
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    })->middleware('auth:api');
+
+    Route::controller(AuthController::class)->group(function () {
+        Route::post('login', 'login');
+        Route::get('logout', 'logout');
+    });
+
+    Route::prefix("admin-dashboard")->group(function () {
+        Route::controller(CustomerController::class)->group(function () {
+            Route::get('customers', 'index');
+            Route::get('customer/{id}', 'details');
+            Route::get('{status}-customer/{id}', 'status');
+        });
+
+        Route::controller(DeliveryController::class)->group(function () {
+            Route::get('deliveries', 'index');
+            Route::get('delivery/{id}', 'details');
+            Route::get('delete-delivery/{id}', 'delete');
+            Route::get('deactivate-delivery/{id}', 'deactive');
+        });
+
+    })->middleware('auth:api');
