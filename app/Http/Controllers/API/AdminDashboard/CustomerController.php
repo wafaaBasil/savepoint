@@ -35,10 +35,10 @@ class CustomerController extends BaseController
     {
        $user = User::find($id);
        if($request->page == null){
-        $orders = $user->customer_orders;
+        $orders = $user->customer_orders();
         $page_count = null;
     }else{
-        $orders = $user->customer_orders->paginate(10);
+        $orders = $user->customer_orders()->paginate(10);
         $page_count = $orders->lastPage();
     }
         
