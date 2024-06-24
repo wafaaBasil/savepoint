@@ -53,10 +53,9 @@ class DeliveryController extends BaseController
 
          return $this->sendResponse($success,'تم ارجاع المندوب بنجاح','Delivery returned successfully');
     }
-    public function status($id, $status)
+    public function status($status, $id)
     {
         $user = User::find($id);
-       dd($user);
         if(is_null($user)|| $user->user_type != 'delivery'){
             return $this->sendError('المندوب غير موجود','Delivery not Found!',404);
         }
