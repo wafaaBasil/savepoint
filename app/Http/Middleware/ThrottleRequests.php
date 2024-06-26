@@ -15,13 +15,13 @@ class ThrottleRequests extends \Illuminate\Routing\Middleware\ThrottleRequests
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, $maxAttempts = 60, $decayMinutes = 1, $prefix = ''): Response
     {
         // $original = parent::handle($request, $next, $maxAttempts, $decayMinutes);
        //dd($request->path);
        if($request->path() == 'api/send-verify-message' || $request->path() == 'api/password/create'){
-        if (RateLimiter::tooManyAttempts($request->path().'.'.$request->input('username'), 3)) {
-            //dd(RateLimiter::availableIn($request->input('username')));
+        if (RateLimiter::tooManyAttempts($request->path().'.'.$request->input('phonenumber'), 3)) {
+            //dd(RateLimiter::availableIn($request->input('phonenumber')));
             $response = [
         'success' =>false ,
         'message'=>['en' => 'You have exceeded the limit. Please try again in 24 hours.', 'ar' => 'لقد تجاوزت الحد المسموح الرجاء المحاولة بعد 24 ساعة']
@@ -29,29 +29,15 @@ class ThrottleRequests extends \Illuminate\Routing\Middleware\ThrottleRequests
     ];
         return response()->json($response,429);
         }else{
-        RateLimiter::hit($request->path().'.'.$request->input('username'), 86400);
+        RateLimiter::hit($request->path().'.'.$request->input('phonenumber'), 86400);
         }
         
        }
-        if($request->path() == 'api/update-phonenumber'){
-        if (RateLimiter::tooManyAttempts($request->path().'.'.$request->input('email'), 3)) {
-            //dd(RateLimiter::availableIn($request->input('username')));
-            $response = [
-        'success' =>false ,
-        'message'=>['en' => 'You have exceeded the limit of change password. Please try again in 24 hours.', 'ar' => 'لقد تجاوزت الحد المسموح لتغيير رقم الجوال الرجاء المحاولة بعد 24 ساعة']
 
-    ];
-        return response()->json($response,429);
-        }else{
-        RateLimiter::hit($request->path().'.'.$request->input('email'), 86400);
-        }
-        
-       }
-       
         if($request->path() == 'api/celebrity/profile/send-verify-message' || $request->path() == 'api/user/profile/send-verify-message'){
             $user = Auth::user();
-        if (RateLimiter::tooManyAttempts($request->path().'.'.$user->username, 3)) {
-            //dd(RateLimiter::availableIn($request->input('username')));
+        if (RateLimiter::tooManyAttempts($request->path().'.'.$user->phonenumber, 3)) {
+            //dd(RateLimiter::availableIn($request->input('phonenumber')));
             $response = [
         'success' =>false ,
         'message'=>['en' => 'You have exceeded the limit. Please try again in 24 hours.', 'ar' => 'لقد تجاوزت الحد المسموح الرجاء المحاولة بعد 24 ساعة']
@@ -59,7 +45,7 @@ class ThrottleRequests extends \Illuminate\Routing\Middleware\ThrottleRequests
     ];
         return response()->json($response,429);
         }else{
-        RateLimiter::hit($request->path().'.'.$user->username, 86400);
+        RateLimiter::hit($request->path().'.'.$user->phonenumber, 86400);
         }
         
        }
