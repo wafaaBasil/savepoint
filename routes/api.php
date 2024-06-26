@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\AdminDashboard\CustomerController;
+use App\Http\Controllers\API\PasswordResetController;
 use App\Http\Controllers\API\AdminDashboard\DeliveryController;
 
 
@@ -21,7 +22,7 @@ use App\Http\Controllers\API\AdminDashboard\DeliveryController;
         'middleware' => 'api',    
         'prefix' => 'password'
     ], function () {    
-        Route::controller(CustomerController::class)->group(function () {
+        Route::controller(PasswordResetController::class)->group(function () {
         Route::post('create', 'create')/*->middleware(ThrottleRequests::class)*/;
         Route::get('find/{token}', 'find');
         Route::post('verify', 'verifyContact');
