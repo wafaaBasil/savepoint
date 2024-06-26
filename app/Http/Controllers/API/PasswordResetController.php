@@ -71,7 +71,6 @@ class PasswordResetController extends BaseController
             //$this->sendSms($request); // send and return its response
         }
 
-        $success['status']= 200;
         $success['user']= new UserResource($user);
         return $this->sendResponse($success,'تم ارسال الرسالة بنجاح','SMS send successfully');
     }
@@ -96,7 +95,6 @@ class PasswordResetController extends BaseController
             return $this->sendError('خطأ في توكين استعادة كلمة المرور','This password reset token is invalid.',404);
         }
         
-        $success['status']= 200;
         $success['passowrdReset']= $passwordReset;
         return $this->sendResponse($success,'توكين استعادة كلمة المرور صحيح','This password reset token is valid.');
     }
@@ -173,7 +171,6 @@ class PasswordResetController extends BaseController
         $passwordReset->delete();
 
         
-        $success['status']= 200;
         $success['user']= new UserResource($user);
         return $this->sendResponse($success,'تم استعادة كلمة المرور بنجاح','The password reset success.');
     }
@@ -217,14 +214,13 @@ class PasswordResetController extends BaseController
         {
             $passwordReset = PasswordResetToken::where('phonenumber',$user->phonenumber)->first();
             $user->resetCode();
-            $success['status']= 200;
             $success['user']= new UserResource($user);
             $success['token']= $passwordReset->token;
             return $this->sendResponse($success,'تم التحقق','verified');
         }
         else
         {
-            $success['status']= 200;
+            $success= null;
             return $this->sendResponse($success,'لم يتم التحقق','not verified');
         }
     }
