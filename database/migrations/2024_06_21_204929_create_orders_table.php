@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('customer_id');
             $table->integer('provider_id');
             $table->integer('delivery_id');
+            $table->integer('payment_method_id')->nullable();
             $table->double('order_price');
             $table->double('delivery_price');
             $table->integer('copon_id')->nullable();

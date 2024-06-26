@@ -26,6 +26,11 @@ class Order extends Model
         return $this->belongsTo(Provider::class);
     }
 
+    public function payment_method(): BelongsTo
+    {
+        return $this->belongsTo(PaymentMethod::class);
+    }
+
    /* public function delivery_rating_customer(): HasOne
     {
         return $this->belongsTo(Rating::class,'delivery_id','from_user_id');
