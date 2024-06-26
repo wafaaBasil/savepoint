@@ -15,7 +15,7 @@ class ThrottleRequests extends \Illuminate\Routing\Middleware\ThrottleRequests
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, $maxAttempts = 60, $decayMinutes = 1, $prefix = '')
+    public function handle(Request $request, Closure $next): Response
     {
         // $original = parent::handle($request, $next, $maxAttempts, $decayMinutes);
        //dd($request->path);
@@ -33,7 +33,7 @@ class ThrottleRequests extends \Illuminate\Routing\Middleware\ThrottleRequests
         }
         
        }
-
+       
         if($request->path() == 'api/celebrity/profile/send-verify-message' || $request->path() == 'api/user/profile/send-verify-message'){
             $user = Auth::user();
         if (RateLimiter::tooManyAttempts($request->path().'.'.$user->phonenumber, 3)) {
