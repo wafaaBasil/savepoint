@@ -15,7 +15,7 @@ class ThrottleRequests extends \Illuminate\Routing\Middleware\ThrottleRequests
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, $maxAttempts = 60, $decayMinutes = 1, $prefix = ''): Response
+    public function handle(Request $request, Closure $next, $maxAttempts = 60, $decayMinutes = 1, $prefix = '')
     {
         // $original = parent::handle($request, $next, $maxAttempts, $decayMinutes);
        //dd($request->path);
