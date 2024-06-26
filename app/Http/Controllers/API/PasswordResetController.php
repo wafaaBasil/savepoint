@@ -71,7 +71,8 @@ class PasswordResetController extends BaseController
             //$this->sendSms($request); // send and return its response
         }
 
-        $success['user']= new UserResource($user);
+        //$success['user']= new UserResource($user);
+        $success=null;
         return $this->sendResponse($success,'تم ارسال الرسالة بنجاح','SMS send successfully');
     }
     
@@ -171,7 +172,8 @@ class PasswordResetController extends BaseController
         $passwordReset->delete();
 
         
-        $success['user']= new UserResource($user);
+        //$success['user']= new UserResource($user);
+        $success=null;
         return $this->sendResponse($success,'تم استعادة كلمة المرور بنجاح','The password reset success.');
     }
 
@@ -214,7 +216,7 @@ class PasswordResetController extends BaseController
         {
             $passwordReset = PasswordResetToken::where('phonenumber',$user->phonenumber)->first();
             $user->resetCode();
-            $success['user']= new UserResource($user);
+            //$success['user']= new UserResource($user);
             $success['token']= $passwordReset->token;
             return $this->sendResponse($success,'تم التحقق','verified');
         }
