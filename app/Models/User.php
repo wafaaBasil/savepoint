@@ -85,4 +85,21 @@ class User extends Authenticatable
     {
         return $this->hasMany(Order::class,'delivery_id');
     }
+
+    public function generateCode()
+    {
+        $this->timestamps = false;
+        //$this->code = rand(100000, 999999);
+        $this->code = 123456;
+        $this->code_expires_at = now()->addMinutes(10);
+        $this->save();
+    }
+
+    public function resetCode()
+    {
+        $this->timestamps = false;
+        $this->code = null;
+        $this->code_expires_at = null;
+        $this->save();
+    }
 }

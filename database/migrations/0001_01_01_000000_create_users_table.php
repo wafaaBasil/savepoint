@@ -28,13 +28,15 @@ return new class extends Migration
              $table->integer('provider_id')->nullable();
              $table->boolean('active')->default(1);
              $table->timestamp('last_login_at')->nullable();
+             $table->timestamp('code_expires_at')->nullable();
+             $table->integer('code')->nullable();
              $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->primary();
+            $table->string('phonenumber')->primary();
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\ThrottleRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
@@ -15,6 +16,19 @@ use App\Http\Controllers\API\AdminDashboard\DeliveryController;
         Route::post('login', 'login');
         Route::get('logout', 'logout');
     });
+
+    Route::group([      
+        'middleware' => 'api',    
+        'prefix' => 'password'
+    ], function () {    
+        Route::controller(CustomerController::class)->group(function () {
+        Route::post('create', 'create')->middleware(ThrottleRequests::class);
+        Route::get('find/{token}', 'find');
+        Route::post('verify', 'verifyContact');
+        Route::post('reset', 'reset');
+    });
+});
+    
 
     Route::prefix("admin-dashboard")->group(function () {
         Route::controller(CustomerController::class)->group(function () {
