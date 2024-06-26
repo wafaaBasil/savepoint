@@ -22,7 +22,7 @@ use App\Http\Controllers\API\AdminDashboard\DeliveryController;
         'prefix' => 'password'
     ], function () {    
         Route::controller(CustomerController::class)->group(function () {
-        Route::post('create', 'create')->middleware(ThrottleRequests::class);
+        Route::post('create', 'create')/*->middleware(ThrottleRequests::class)*/;
         Route::get('find/{token}', 'find');
         Route::post('verify', 'verifyContact');
         Route::post('reset', 'reset');
