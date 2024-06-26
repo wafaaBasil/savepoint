@@ -35,7 +35,7 @@ class Order extends JsonResource
             'delivery_price' => $this->delivery_price,
             'is_accept_offer_price' => 'true',   /////////////update
             //'distance_from_store' => $this->distance_from_store,   /////////////update
-            'payment_method' =>  $this->payment_method,   /////////////update
+            'payment_method' =>  new PaymentMethod($this->payment_method),   /////////////update
             //'customer_rating_driver' =>  $this->customer_rating_driver,   /////////////update
             //'driver_rating_customer' =>  $this->driver_rating_customer,   /////////////update
             //'product' =>  $this->product,   /////////////update
