@@ -4,7 +4,7 @@ use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use App\Models\PasswordReset;
+use App\Models\PasswordResetToken;
 use App\Models\User;
 use Validator;
 use Illuminate\Support\Str;
@@ -51,7 +51,7 @@ class PasswordResetController extends BaseController
             return $this->sendError('المستخدم غير موجود','We cant find a user with that username.',404);
         }
         
-        $passwordReset = PasswordReset::updateOrCreate(
+        $passwordReset = PasswordResetToken::updateOrCreate(
             ['phonenumber' => $user->phonenumber],
             [
                 'phonenumber' => $user->phonenumber,
@@ -86,7 +86,7 @@ class PasswordResetController extends BaseController
      */
     public function find($token)
     {
-        $passwordReset = PasswordReset::where('token', $token)
+        $passwordReset = PasswordResetToken::where('token', $token)
             ->first();
         if (!$passwordReset){
             return $this->sendError(' خطأ في توكين استعادة كلمة المرور','This password reset token is invalid.',404);
@@ -156,7 +156,7 @@ class PasswordResetController extends BaseController
             return $this->sendError('المستخدم غير موجود','We cant find a user with that username.',404);
         }
         
-        $passwordReset = PasswordReset::where([
+        $passwordReset = PasswordResetToken::where([
             ['token', $request->token],
             ['phonenumber', $user->phonenumber]
         ])->first();
@@ -215,7 +215,7 @@ class PasswordResetController extends BaseController
         
         if($request->code == $user->code)
         {
-            $passwordReset = PasswordReset::where('phonenumber',$user->phonenumber)->first();
+            $passwordReset = PasswordResetToken::where('phonenumber',$user->phonenumber)->first();
             $user->resetCode();
             $success['status']= 200;
             $success['user']= new UserResource($user);

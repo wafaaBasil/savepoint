@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PasswordReset extends Model
+class PasswordResetToken extends Model
 {
     protected $fillable = [
         'phonenumber', 'token'
