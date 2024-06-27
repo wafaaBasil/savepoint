@@ -14,7 +14,7 @@ class ProviderCategorySeeder extends Seeder
     public function run(): void
     {
         for($i=1;$i<16;$i++){
-            DB::table('providers_categories')->insert([
+            DB::table('categories_providers')->insert([
                 [
                     'provider_id' => $i,
                     'category_id' => 1
