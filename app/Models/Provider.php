@@ -23,7 +23,10 @@ class Provider extends Model
     {
         return $this->hasMany(Provider::class);
     }
-
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
     public function main(): BelongsTo
     {
         return $this->BelongsTo(Provider::class);
