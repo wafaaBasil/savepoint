@@ -17,8 +17,11 @@ return new class extends Migration
             $table->string('name');
             $table->string('phonenumber');
             $table->string('address');
+            $table->decimal('latitude', 10, 8)->nullable();
+            $table->decimal('longitude', 11, 8)->nullable();
             $table->integer('provider_id')->nullable();
             $table->boolean('active')->default(1);
+            $table->enum('status', ['new', 'accept', 'reject'])->default('new');
             $table->timestamps();
         });
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,6 +15,26 @@ class Provider extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        Carbon::setLocale('ar');
+        
+        return [
+            'id' => $this->id,
+            'type' => $this->provider_id == null ? 'main':'branch', 
+            'logo' => $this->logo,
+            'name' => $this->name,
+            'phonenumber' => $this->phonenumber,
+            'address' => $this->address,
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
+            'categories'=>$this->categories,
+            'created_at' =>Carbon::parse($this->created_at)->isoFormat('a h:m - YYYY/D ، MMMM'),
+            'active' => $this->active,
+            'branches_count' => $this->branches->count(),
+            'order_count' => $this->orders->count(),
+            'new_order_count' => $this->orders->where('status','جديد')->count(),
+            'deliver_order_count' => $this->orders->where('status','التوصيل')->count(),
+            'pending_order_count' => $this->orders->where('status','جاري التجهيز')->count(),
+            'completed_order_count' => $this->orders->where('status','تم التوصيل')->count(),
+        ];
     }
 }

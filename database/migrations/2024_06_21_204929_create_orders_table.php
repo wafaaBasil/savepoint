@@ -21,7 +21,7 @@ return new class extends Migration
             $table->double('delivery_price');
             $table->integer('copon_id')->nullable();
             $table->double('total');
-            $table->enum('status', ['جاري التجهيز', 'التوصيل', 'تم التوصيل']);
+            $table->enum('status', ['جاري التجهيز', 'التوصيل', 'تم التوصيل', 'جديد']);
             $table->timestamps();
         });
     }
