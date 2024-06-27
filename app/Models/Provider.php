@@ -17,7 +17,7 @@ class Provider extends Model
 
     public function categories(): BelongsToMany
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class,'categories_providers');
     }
         public function branches(): HasMany
     {
