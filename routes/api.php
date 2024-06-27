@@ -7,6 +7,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\AdminDashboard\CustomerController;
 use App\Http\Controllers\API\PasswordResetController;
 use App\Http\Controllers\API\AdminDashboard\DeliveryController;
+use App\Http\Controllers\API\AdminDashboard\ProviderController;
 
 
     Route::get('/user', function (Request $request) {
