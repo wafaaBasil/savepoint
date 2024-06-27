@@ -28,6 +28,7 @@ class Provider extends JsonResource
             'longitude' => $this->longitude,
             'categories'=>$this->categories,
             'created_at' =>Carbon::parse($this->created_at)->isoFormat('a h:m - YYYY/D ، MMMM'),
+            'status' => $this->status,
             'active' => $this->active,
             'branches_count' => $this->branches->count(),
             'order_count' => $this->orders->count(),
