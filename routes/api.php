@@ -44,4 +44,10 @@ use App\Http\Controllers\API\AdminDashboard\DeliveryController;
             Route::get('{status}-delivery/{id}', 'status');
         });
 
+        Route::controller(ProviderController::class)->group(function () {
+            Route::get('providers', 'index');
+            Route::get('provider/{id}', 'details');
+            Route::get('{status}-provider/{id}', 'status');
+        });
+
     })->middleware('auth:api');

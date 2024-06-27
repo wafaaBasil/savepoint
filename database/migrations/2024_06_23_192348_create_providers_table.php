@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('provider_id')->nullable();
             $table->boolean('active')->default(1);
             $table->enum('status', ['new', 'accept', 'reject'])->default('new');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
