@@ -8,6 +8,7 @@ use App\Http\Controllers\API\AdminDashboard\CustomerController;
 use App\Http\Controllers\API\PasswordResetController;
 use App\Http\Controllers\API\AdminDashboard\DeliveryController;
 use App\Http\Controllers\API\AdminDashboard\ProviderController;
+use App\Http\Controllers\API\AdminDashboard\JoinOrderController;
 
 
     Route::get('/user', function (Request $request) {
@@ -49,6 +50,12 @@ use App\Http\Controllers\API\AdminDashboard\ProviderController;
             Route::get('providers', 'index');
             Route::get('provider/{id}', 'details');
             Route::get('{status}-provider/{id}', 'status');
+        });
+
+        Route::controller(JoinOrderController::class)->group(function () {
+            Route::get('join-orders', 'index');
+            Route::get('join-order/{id}', 'details');
+            Route::get('{status}-join-order/{id}', 'status');
         });
 
     })->middleware('auth:api');
