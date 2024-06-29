@@ -30,5 +30,12 @@ class RatingSeeder extends Seeder
             'order_id' => $i,
         ]);
     }
+    for($i=1; $i<5 ; $i++){
+        Rating::create([
+            'comment' => 'تطبيق مميز',
+            'stars' => 5,
+            'from_user_id' => 2,
+        ]);
+    }
     }
 }

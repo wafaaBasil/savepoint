@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('comment');
             $table->integer('stars');
             $table->integer('from_user_id');
-            $table->integer('to_user_id');
+            $table->integer('to_user_id')->nullable();
             $table->integer('order_id')->nullable();
             $table->boolean('active')->default(1);
             $table->timestamps();
