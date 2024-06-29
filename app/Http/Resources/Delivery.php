@@ -38,6 +38,7 @@ class Delivery extends JsonResource
             'order_count' => $this->delivery_orders->count(),
             'points' => 0,    /////////////update
             'reward_balance' => 0, /////////////update
+            'rating_avg' => $this->ratings()->avg(),
         ];
     }
 }
