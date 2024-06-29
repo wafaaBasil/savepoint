@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Validator;
+use App\Http\Resources\Rating as RatingResource;
 use App\Http\Resources\Order as OrderResource;
 use App\Http\Resources\Delivery as DeliveryResource;
 use App\Http\Controllers\API\BaseController as BaseController;
@@ -39,16 +40,22 @@ class DeliveryController extends BaseController
         }
 
        if($request->page == null){
-            $orders = $user->delivery_orders;
+            $orders = $user->delivery_orders()->orderBy('created_at','desc')->get();
             $page_count = null;
+            $ratings =  $user->ratings()->orderBy('created_at','desc')->get();
+            $ratings_page_count = null;
         }else{
-            $orders = $user->delivery_orders()->paginate(10);
+            $orders = $user->delivery_orders()->orderBy('created_at','desc')->paginate(10);
             $page_count = $orders->lastPage();
+            $ratings =  $user->ratings()->orderBy('created_at','desc')->paginate(10);
+            $ratings_page_count = $ratings->lastPage();
         }
         
         $success['delivery']=new DeliveryResource($user);
         $success['orders']=OrderResource::collection($orders);
         $success['page_count'] = $page_count;
+        $success['ratings']=RatingResource::collection($ratings);
+        $success['ratings_page_count'] = $ratings_page_count;
         $success['status']= 200;
 
          return $this->sendResponse($success,'تم ارجاع المندوب بنجاح','Delivery returned successfully');

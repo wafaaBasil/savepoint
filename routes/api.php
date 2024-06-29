@@ -58,4 +58,9 @@ use App\Http\Controllers\API\AdminDashboard\JoinOrderController;
             Route::get('{status}-join-order/{id}', 'status');
         });
 
+        Route::controller(RatingController::class)->group(function () {
+            Route::get('ratings', 'index');
+            Route::get('{status}-rating/{id}', 'status');
+        });
+
     })->middleware('auth:api');

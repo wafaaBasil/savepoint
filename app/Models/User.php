@@ -86,6 +86,11 @@ class User extends Authenticatable
         return $this->hasMany(Order::class,'delivery_id');
     }
 
+    public function ratings(): HasMany
+    {
+        return $this->HasMany(Rating::class,'to_user_id');
+    }
+
     public function generateCode()
     {
         $this->timestamps = false;
