@@ -10,13 +10,13 @@ class Rating extends Model
 {
     use HasFactory;
 
-    public function user_from(): BelongsTo
+    public function from_user(): BelongsTo
     {
-        return $this->BelongsTo(User::class,'user_from_id');
+        return $this->BelongsTo(User::class,'from_user_id');
     }
 
-    public function user_to(): BelongsTo
+    public function to_user(): BelongsTo
     {
-        return $this->BelongsTo(User::class,'user_to_id');
+        return $this->BelongsTo(User::class,'to_user_id');
     }
 }

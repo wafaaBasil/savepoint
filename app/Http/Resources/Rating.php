@@ -16,8 +16,8 @@ class Rating extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user_name' => $this->user_from->name, 
-            'user_image' => $this->user_from->image,
+            'user_name' => $this->from_user->name, 
+            'user_image' => $this->from_user->image,
             'stars' => $this->stars,
             'comment' => $this->comment
         ];
