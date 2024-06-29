@@ -46,7 +46,7 @@ class ProviderController extends BaseController
             $page_count = $orders->lastPage();
         }
         
-        $success['provider']=new ProviderResource($provider);
+        //$success['provider']=new ProviderResource($provider);
         $success['orders']=OrderResource::collection($orders);
         $success['page_count'] = $page_count;
         $success['status']= 200;

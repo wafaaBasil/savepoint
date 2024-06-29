@@ -39,23 +39,20 @@ class DeliveryController extends BaseController
             return $this->sendError('المندوب غير موجود','Delivery not Found!',404);
         }
 
+        $ratings =  $user->ratings()->orderBy('created_at','desc')->get();
+
        if($request->page == null){
             $orders = $user->delivery_orders()->orderBy('created_at','desc')->get();
             $page_count = null;
-            $ratings =  $user->ratings()->orderBy('created_at','desc')->get();
-            $ratings_page_count = null;
         }else{
             $orders = $user->delivery_orders()->orderBy('created_at','desc')->paginate(10);
             $page_count = $orders->lastPage();
-            $ratings =  $user->ratings()->orderBy('created_at','desc')->paginate(10);
-            $ratings_page_count = $ratings->lastPage();
         }
         
-        $success['delivery']=new DeliveryResource($user);
+        //$success['delivery']=new DeliveryResource($user);
         $success['orders']=OrderResource::collection($orders);
         $success['page_count'] = $page_count;
         $success['ratings']=RatingResource::collection($ratings);
-        $success['ratings_page_count'] = $ratings_page_count;
         $success['status']= 200;
 
          return $this->sendResponse($success,'تم ارجاع المندوب بنجاح','Delivery returned successfully');

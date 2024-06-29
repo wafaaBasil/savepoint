@@ -55,7 +55,7 @@ use App\Http\Controllers\API\AdminDashboard\RatingController;
 
         Route::controller(JoinOrderController::class)->group(function () {
             Route::get('join-orders', 'index');
-            Route::get('join-order/{id}', 'details');
+           // Route::get('join-order/{id}', 'details');
             Route::get('{status}-join-order/{id}', 'status');
         });
 

@@ -48,7 +48,7 @@ class CustomerController extends BaseController
         }
             
         //dd($orders);
-        $success['customer']=new UserResource($user);
+        //$success['customer']=new UserResource($user);
         $success['orders']=OrderResource::collection($orders);
         $success['page_count'] = $page_count;
         $success['status']= 200;
