@@ -112,6 +112,7 @@ class CouponController extends BaseController
         $coupon->end_date = $request->end_date;
         $coupon->num_of_use = $request->num_of_use;
         $coupon->active = $request->active;
+        $coupon->save();
          
         $success['coupon']=new CouponResource($coupon);
         $success['status']= 200;    
