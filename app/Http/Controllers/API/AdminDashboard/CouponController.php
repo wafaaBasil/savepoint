@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Coupon;
 use Illuminate\Http\Request;
 use Validator;
-use App\Http\Resources\User as CouponResource;
+use App\Http\Resources\Coupon as CouponResource;
 use App\Http\Controllers\API\BaseController as BaseController;
 
 
