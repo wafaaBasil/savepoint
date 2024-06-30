@@ -10,6 +10,7 @@ use App\Http\Controllers\API\AdminDashboard\DeliveryController;
 use App\Http\Controllers\API\AdminDashboard\ProviderController;
 use App\Http\Controllers\API\AdminDashboard\JoinOrderController;
 use App\Http\Controllers\API\AdminDashboard\RatingController;
+use App\Http\Controllers\API\AdminDashboard\CouponController;
 
 
     Route::get('/user', function (Request $request) {
