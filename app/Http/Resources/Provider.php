@@ -17,11 +17,6 @@ class Provider extends JsonResource
     public function toArray(Request $request): array
     {
         Carbon::setLocale('ar');
-        $currentMonth = Carbon::now()->month;
-        $currentYear = Carbon::now()->year;
-
-        $previousMonth = Carbon::now()->subMonth()->month;
-        $previousYear = Carbon::now()->subMonth()->year;
 
         
         return [
@@ -43,27 +38,9 @@ class Provider extends JsonResource
             'deliver_order_count' => $this->orders->where('status','التوصيل')->count(),
             'pending_order_count' => $this->orders->where('status','جاري التجهيز')->count(),
             'completed_order_count' => $this->orders->where('status','تم التوصيل')->count(),
-            'deliver_order_monthly' => (Order::where('status','التوصيل')->whereMonth('created_at', $currentMonth)
-            ->whereYear('created_at', $currentYear)
-            ->count() - Order::where('status','التوصيل')->whereMonth('created_at', $previousMonth)
-            ->whereYear('created_at', $previousYear)->count()
-            )/Order::where('status','التوصيل')->whereMonth('created_at', $previousMonth)
-            ->whereYear('created_at', $previousYear)
-            ->count()*100,
-            'pending_order_monthly' => (Order::where('status','جاري التجهيز')->whereMonth('created_at', $currentMonth)
-            ->whereYear('created_at', $currentYear)
-            ->count() - Order::where('status','جاري التجهيز')->whereMonth('created_at', $previousMonth)
-            ->whereYear('created_at', $previousYear)->count()
-            )/Order::where('status','جاري التجهيز')->whereMonth('created_at', $previousMonth)
-            ->whereYear('created_at', $previousYear)
-            ->count()*100,
-            'completed_order_monthly' => (Order::where('status','تم التوصيل')->whereMonth('created_at', $currentMonth)
-            ->whereYear('created_at', $currentYear)
-            ->count() - Order::where('status','تم التوصيل')->whereMonth('created_at', $previousMonth)
-            ->whereYear('created_at', $previousYear)->count()
-            )/Order::where('status','تم التوصيل')->whereMonth('created_at', $previousMonth)
-            ->whereYear('created_at', $previousYear)
-            ->count()*100,
+            'deliver_order_monthly' => $this->deliver_order_monthly,
+            'pending_order_monthly' => $this->pending_order_monthly,
+            'completed_order_monthly' => $this->completed_order_monthly,
             'deliver_order_percent' => $this->orders->where('status','التوصيل')->count()/$this->orders->count(),
             'pending_order_percent' => $this->orders->where('status','جاري التجهيز')->count()/$this->orders->count(),
             'completed_order_percent' => $this->orders->where('status','تم التوصيل')->count()/$this->orders->count(),
