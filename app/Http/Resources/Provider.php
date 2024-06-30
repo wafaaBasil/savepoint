@@ -41,9 +41,9 @@ class Provider extends JsonResource
             'deliver_order_monthly' => $this->deliver_order_monthly(),
             'pending_order_monthly' => $this->pending_order_monthly(),
             'completed_order_monthly' => $this->completed_order_monthly(),
-            'deliver_order_percent' => $this->orders->where('status','التوصيل')->count()/$this->orders->count(),
-            'pending_order_percent' => $this->orders->where('status','جاري التجهيز')->count()/$this->orders->count(),
-            'completed_order_percent' => $this->orders->where('status','تم التوصيل')->count()/$this->orders->count(),
+            'deliver_order_percent' => $this->deliver_order_percent(),
+            'pending_order_percent' => $this->deliver_order_percent(),
+            'completed_order_percent' => $this->deliver_order_percent(),
         ];
     }
 }
