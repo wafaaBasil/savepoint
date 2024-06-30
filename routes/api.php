@@ -64,4 +64,10 @@ use App\Http\Controllers\API\AdminDashboard\RatingController;
             Route::get('{status}-rating/{id}', 'status');
         });
 
+        Route::controller(CouponController::class)->group(function () {
+            Route::get('coupons', 'index');
+            Route::post('coupons/create', 'create');
+            Route::get('{status}-coupon/{id}', 'status');
+        });
+
     })->middleware('auth:api');
