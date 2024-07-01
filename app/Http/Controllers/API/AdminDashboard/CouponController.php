@@ -42,7 +42,7 @@ class CouponController extends BaseController
             'discount' => 'numeric|required',
             'top_discount' => 'numeric|required_if:type,==,percent',
             'end_date' => 'required|date',
-            'num_of_use' => 'numeric|required',
+            //'num_of_use' => 'numeric|required',
             'active' => 'required|in:0,1',
         ],[
             'image.required' => 'A image is required.',
@@ -60,8 +60,8 @@ class CouponController extends BaseController
             'top_discount.numeric' => 'A top discount ust be a number.',
             'end_date.required' => 'A end_date is required.',
             'end_date.date' => 'A end_date must be a date.',
-            'num_of_use.required' => 'A num_of_use is required.',
-            'num_of_use.numeric' => 'A num_of_use must be a number.',
+            //'num_of_use.required' => 'A num_of_use is required.',
+            //'num_of_use.numeric' => 'A num_of_use must be a number.',
             'active.required' => 'A active is required.',
             'active.in' => 'The selected active is invalid.',
         ]);
@@ -73,7 +73,7 @@ class CouponController extends BaseController
             'discount' => 'numeric|required',
             'top_discount' => 'numeric|required_if:type,==,percent',
             'end_date' => 'required|date',
-            'num_of_use' => 'numeric|required',
+            //'num_of_use' => 'numeric|required',
             'active' => 'required|in:0,1',
         ],[
             'image.required' => 'حقل الصورة مطلوب.',
@@ -91,8 +91,8 @@ class CouponController extends BaseController
             'top_discount.numeric' => 'يجب ان يكون حقل الحد الاقصى للخصم رقم.',
             'end_date.required' => 'حقل تاريخ الانتهاء مطلوب.',
             'end_date.date' => 'يجب ان يكون حقل تاريخ الانتهاء تاريخ.',
-            'num_of_use.required' => 'حقل عدد مرات الاستخدام مطلوب.',
-            'num_of_use.numeric' => 'يجب ان يكون حقل عدد مرات الاستخدام رقم.',
+            //'num_of_use.required' => 'حقل عدد مرات الاستخدام مطلوب.',
+           // 'num_of_use.numeric' => 'يجب ان يكون حقل عدد مرات الاستخدام رقم.',
             'active.required' => 'حقل التفعيل مطلوب.',
             'active.in' => 'قيمة حقل التفعيل غير صحيح.',
         ]);
@@ -110,7 +110,7 @@ class CouponController extends BaseController
         $coupon->discount = $request->discount;
         $coupon->top_discount = $request->top_discount;
         $coupon->end_date = $request->end_date;
-        $coupon->num_of_use = $request->num_of_use;
+        $coupon->num_of_use = 1;
         $coupon->active = $request->active;
         $coupon->save();
          
@@ -127,7 +127,14 @@ class CouponController extends BaseController
         if(is_null($coupon)){
             return $this->sendError('الكوبون غير موجود','Coupon not Found!',404);
         }
-        if($status == 'activate'){
+        if($status == 'delete'){
+           
+            $coupon->delete();
+            $success['status']= 200;
+            return $this->sendResponse($success,'تم حذف الكوبون بنجاح','Coupon deleted successfully');
+        
+        }
+        elseif($status == 'activate'){
            
             $coupon->active = 1;
             $coupon->save();

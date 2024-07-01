@@ -21,6 +21,7 @@ return new class extends Migration
             $table->timestamp('end_date');
             $table->integer('num_of_use');
             $table->boolean('active')->default(1);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

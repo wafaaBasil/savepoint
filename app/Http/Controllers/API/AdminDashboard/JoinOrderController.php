@@ -48,7 +48,13 @@ class JoinOrderController extends BaseController
         if(is_null($provider) || $provider->status != 'new'){
             return $this->sendError('المزود غير موجود','Provider not Found!',404);
         }
-
+        if($status == 'delete'){
+           
+            $provider->delete();
+            $success['status']= 200;
+            return $this->sendResponse($success,'تم حذف المزود بنجاح','Provider deleted successfully');
+        
+        }
         if($status == 'accept'){
            
             $provider->status = 'accept';

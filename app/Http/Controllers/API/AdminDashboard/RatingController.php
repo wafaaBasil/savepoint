@@ -34,8 +34,14 @@ class RatingController extends BaseController
         if(is_null($rating)|| $rating->order_id != null){
             return $this->sendError('التقييم غير موجود','Rating not Found!',404);
         }
-
-        if($status == 'activate'){
+        if($status == 'delete'){
+           
+            $rating->delete();
+            $success['status']= 200;
+            return $this->sendResponse($success,'تم حذف التقييم بنجاح','Rating deleted successfully');
+        
+        }
+        elseif($status == 'activate'){
            
             $rating->active = 1;
             $rating->save();
