@@ -116,6 +116,8 @@ class CouponController extends BaseController
         $coupon->discount = $request->discount;
         $coupon->top_discount = $request->top_discount;
         $coupon->end_date = $request->end_date;
+        $coupon->provider_id = $request->provider_id;
+        $coupon->product_id = $request->product_id;
         $coupon->num_of_use = 1;
         $coupon->active = $request->active;
         $coupon->save();
