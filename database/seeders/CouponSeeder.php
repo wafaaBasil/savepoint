@@ -19,6 +19,7 @@ class CouponSeeder extends Seeder
             'type' => 'percent',
             'discount' => 15,
             'top_discount' => 400,
+            'provider_id' => 1,
             'end_date' => '2024-07-15',
             'num_of_use' => 5,
         ]);
@@ -28,6 +29,7 @@ class CouponSeeder extends Seeder
             'type' => 'percent',
             'discount' => 13,
             'top_discount' => 300,
+            'provider_id' => 1,
             'end_date' => '2024-07-20',
             'num_of_use' => 20,
         ]);
@@ -36,6 +38,7 @@ class CouponSeeder extends Seeder
             'name' => 'عرض رقم 3',
             'type' => 'fixed',
             'discount' => 600,
+            'provider_id' => 1,
             'end_date' => '2024-08-15',
             'num_of_use' => 15,
         ]);
@@ -44,6 +47,7 @@ class CouponSeeder extends Seeder
             'name' => 'عرض رقم 4',
             'type' => 'fixed',
             'discount' => 400,
+            'provider_id' => 1,
             'end_date' => '2024-09-10',
             'num_of_use' => 30,
         ]);
@@ -52,6 +56,7 @@ class CouponSeeder extends Seeder
             'name' => 'عرض رقم 5',
             'type' => 'fixed',
             'discount' => 250,
+            'provider_id' => 1,
             'end_date' => '2024-08-20',
             'num_of_use' => 10,
         ]);

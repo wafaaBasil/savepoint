@@ -18,6 +18,8 @@ return new class extends Migration
             $table->enum('type',['percent','fixed'])->default('percent');
             $table->double('discount');
             $table->double('top_discount')->nullable();
+            $table->integer('provider_id');
+            $table->integer('product_id')->nullable();
             $table->timestamp('end_date');
             $table->integer('num_of_use');
             $table->boolean('active')->default(1);
