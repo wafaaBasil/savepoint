@@ -68,6 +68,7 @@ use App\Http\Controllers\API\AdminDashboard\CouponController;
         Route::controller(CouponController::class)->group(function () {
             Route::get('coupons', 'index');
             Route::post('coupons/create', 'create');
+            Route::post('coupons/update/{id}', 'update');
             Route::get('{status}-coupon/{id}', 'status');
         });
 
