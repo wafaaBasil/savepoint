@@ -12,11 +12,11 @@ class Rating extends Model
 
     public function from_user(): BelongsTo
     {
-        return $this->BelongsTo(User::class,'from_user_id');
+        return $this->BelongsTo(User::class,'from_user_id')->withTrashed();
     }
 
     public function to_user(): BelongsTo
     {
-        return $this->BelongsTo(User::class,'to_user_id');
+        return $this->BelongsTo(User::class,'to_user_id')->withTrashed();
     }
 }

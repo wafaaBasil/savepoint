@@ -13,17 +13,17 @@ class Order extends Model
 
     public function customer(): BelongsTo
     {
-        return $this->belongsTo(User::class,'customer_id');
+        return $this->belongsTo(User::class,'customer_id')->withTrashed();
     }
 
     public function delivery(): BelongsTo
     {
-        return $this->belongsTo(User::class,'delivery_id');
+        return $this->belongsTo(User::class,'delivery_id')->withTrashed();
     }
 
     public function provider(): BelongsTo
     {
-        return $this->belongsTo(Provider::class);
+        return $this->belongsTo(Provider::class)->withTrashed();
     }
 
     public function payment_method(): BelongsTo
