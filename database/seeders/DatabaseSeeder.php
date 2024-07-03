@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ProviderCategorySeeder::class);
         $this->call(RatingSeeder::class);
         $this->call(CouponSeeder::class);*/
-        $this->call(productSeeder::class);
+        $this->call(ProductSeeder::class);
         /*
         User::factory()->create([
             'name' => 'Test User',
