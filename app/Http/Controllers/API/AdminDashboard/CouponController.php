@@ -140,7 +140,7 @@ class CouponController extends BaseController
         
         $validator_en =  Validator::make($input ,[
             'image' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'name' => 'string|required|unique:coupons,name',
+            'name' => 'string|required|unique:coupons,name,'.$id,
             'type' => 'required|in:percent,fixed,product',
             'discount' => 'numeric|required',
             'top_discount' => 'numeric|required_if:type,==,percent',
@@ -176,7 +176,7 @@ class CouponController extends BaseController
 
         $validator =  Validator::make($input ,[
             'image' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'name' => 'string|required|unique:coupons,name',
+            'name' => 'string|required|unique:coupons,name,'.$id,
             'type' => 'required|in:percent,fixed',
             'discount' => 'numeric|required',
             'top_discount' => 'numeric|required_if:type,==,percent',
