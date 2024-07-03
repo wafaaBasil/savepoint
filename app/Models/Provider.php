@@ -141,19 +141,19 @@ class Provider extends Model
     {
         return $this->BelongsTo(Provider::class);
     }
-    public function setImageAttribute($image)
+    public function setLogoAttribute($logo)
     {
-        if(gettype($image) != 'string') {
-            $i = $image->store('images/providers', 'public');
-            $this->attributes['image'] = $image->hashName();
+        if(gettype($logo) != 'string') {
+            $i = $logo->store('images/providers', 'public');
+            $this->attributes['logo'] = $logo->hashName();
         } else {
-            $this->attributes['image'] = $image;
+            $this->attributes['logo'] = $logo;
         }
     }
 
-    public function getImageAttribute($image)
+    public function getLogoAttribute($logo)
     {
-        $img = $image?? 'male.jpeg';
+        $img = $logo?? 'male.jpeg';
         return asset('storage/images/providers') . '/' . $img;
     }
 }
