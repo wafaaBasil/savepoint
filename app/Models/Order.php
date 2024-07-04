@@ -32,7 +32,7 @@ class Order extends Model
         return $this->belongsTo(PaymentMethod::class);
     }
 
-    public function products(): HasMany
+    public function order_products(): HasMany
     {
         return $this->HasMany(OrderProduct::class);
     }
