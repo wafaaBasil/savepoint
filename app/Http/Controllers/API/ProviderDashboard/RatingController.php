@@ -15,10 +15,10 @@ class RatingController extends BaseController
     public function index(Request $request)
     {
         if($request->page == null){
-            $ratings = Rating::where('to_user_id',auth()->user()->provider_id)->orderBy('created_at','desc')->get();
+            $ratings = Rating::where('provider_id',auth()->user()->provider_id)->orderBy('created_at','desc')->get();
             $page_count = null;
         }else{
-            $ratings = Rating::where('to_user_id',auth()->user()->provider_id)->orderBy('created_at','desc')->paginate(10);
+            $ratings = Rating::where('provider_id',auth()->user()->provider_id)->orderBy('created_at','desc')->paginate(10);
             $page_count = $ratings->lastPage();
         }
 
