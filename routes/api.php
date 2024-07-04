@@ -59,6 +59,11 @@ use App\Http\Controllers\API\AdminDashboard\CouponController;
            // Route::get('join-order/{id}', 'details');
             Route::get('{status}-join-order/{id}', 'status');
         });
+        Route::controller(OrderController::class)->group(function () {
+            Route::get('orders', 'index');
+           // Route::get('join-order/{id}', 'details');
+            Route::get('{status}-order/{id}', 'status');
+        });
 
         Route::controller(RatingController::class)->group(function () {
             Route::get('ratings', 'index');
