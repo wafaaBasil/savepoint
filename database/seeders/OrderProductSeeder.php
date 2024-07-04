@@ -14,15 +14,36 @@ class OrderProductSeeder extends Seeder
      */
     public function run(): void
     {
-        
+         for($i=1; $i<5 ; $i++){
              OrderProduct::create([
                 'product_id' => 1,
-                'order_id' => 1,
-                'amount' => 2,
-                'price' => 1500,
+                'order_id' => $i,
+                'amount' => $i,
+                'price' => $i*500,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
+        }
+        for($i=1; $i<5 ; $i++){
+            OrderProduct::create([
+               'product_id' => 2,
+               'order_id' => $i,
+               'amount' => $i,
+               'price' => $i*500,
+               'created_at' => now(),
+               'updated_at' => now(),
+           ]);
+       }
+       for($i=1; $i<5 ; $i++){
+        OrderProduct::create([
+           'product_id' => 3,
+           'order_id' => $i,
+           'amount' => $i,
+           'price' => $i*500,
+           'created_at' => now(),
+           'updated_at' => now(),
+       ]);
+   }
             OrderProduct::create([
                 'product_id' => 1,
                 'order_id' => 1,
