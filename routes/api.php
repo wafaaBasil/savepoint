@@ -36,7 +36,7 @@ use App\Http\Controllers\API\AdminDashboard\CouponController;
 });
     
 
-    Route::prefix("admin-dashboard")->group(function () {
+    Route::prefix("admin-dashboard")->middleware('auth:api')->group(function () {
         Route::controller(CustomerController::class)->group(function () {
             Route::get('customers', 'index');
             Route::get('customer/{id}', 'details');
@@ -78,7 +78,7 @@ use App\Http\Controllers\API\AdminDashboard\CouponController;
             Route::get('{status}-coupon/{id}', 'status');
         });
 
-    })->middleware('auth:api');
+    });
 
     Route::prefix("provider-dashboard")->middleware('auth:api')->group(function () {
         Route::controller(\App\Http\Controllers\API\ProviderDashboard\CustomerController::class)->group(function () {
