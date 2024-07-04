@@ -46,10 +46,10 @@ class CustomerController extends BaseController
         }
 
        if($request->page == null){
-            $orders = $user->customer_orders;
+            $orders = $user->customer_orders()->where('provider_id',auth()->user()->id)->get();
             $page_count = null;
         }else{
-            $orders = $user->customer_orders()->paginate(10);
+            $orders = $user->customer_orders()->where('provider_id',auth()->user()->id)->paginate(10);
             $page_count = $orders->lastPage();
         }
             
