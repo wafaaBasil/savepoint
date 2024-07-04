@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\StoreDashboard;
+namespace App\Http\Controllers\API\ProviderDashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
