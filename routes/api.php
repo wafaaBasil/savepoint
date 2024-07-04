@@ -4,6 +4,7 @@ use App\Http\Middleware\ThrottleRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\AdminDashboard\OrderController;
 use App\Http\Controllers\API\AdminDashboard\CustomerController;
 use App\Http\Controllers\API\PasswordResetController;
 use App\Http\Controllers\API\AdminDashboard\DeliveryController;
