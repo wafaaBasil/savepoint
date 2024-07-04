@@ -16,7 +16,9 @@ class CustomerController extends BaseController
     public function index(Request $request)
     {
         if($request->page == null){
-            $users = User::where('user_type','customer')->orderBy('created_at','desc')->get();
+            $users = User::where('user_type','customer')->whereHas('customer_orders.provider', function ($query){
+                $query->where('provider_id', auth()->user()->provider_id);
+            })->orderBy('created_at','desc')->get();
             $page_count = null;
         }else{
             $users = User::where('user_type','customer')->orderBy('created_at','desc')->paginate(10);
