@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\ProviderDashboard;
+namespace App\Http\Controllers\API\AdminDashboard;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -16,9 +16,7 @@ class CustomerController extends BaseController
     public function index(Request $request)
     {
         if($request->page == null){
-            $users = User::where('user_type','customer')->whereHas('customer_orders.provider', function ($query) use ($providerId) {
-                    $query->where('provider_id', $providerId);
-                })->orderBy('created_at','desc')->get();
+            $users = User::where('user_type','customer')->orderBy('created_at','desc')->get();
             $page_count = null;
         }else{
             $users = User::where('user_type','customer')->orderBy('created_at','desc')->paginate(10);
@@ -45,7 +43,7 @@ class CustomerController extends BaseController
             $orders = $user->customer_orders;
             $page_count = null;
         }else{
-            $orders = $user->customer_orders()->where('provider_id',auth()->user()->id)->paginate(10);
+            $orders = $user->customer_orders()->paginate(10);
             $page_count = $orders->lastPage();
         }
             
@@ -57,7 +55,41 @@ class CustomerController extends BaseController
 
          return $this->sendResponse($success,'تم ارجاع العميل بنجاح','Customer returned successfully');
     }
-  
+    public function status($status, $id)
+    {
+        $user = User::find($id);
+       
+        if(is_null($user)|| $user->user_type != 'customer'){
+            return $this->sendError('العميل غير موجود','Customer not Found!',404);
+        }
+        if($status == 'delete'){
+           
+            $user->delete();
+            $success['status']= 200;
+            return $this->sendResponse($success,'تم حذف العميل بنجاح','Customer deleted successfully');
+        
+        }elseif($status == 'activate'){
+           
+            $user->active = 1;
+            $user->save();
+            $success['status']= 200;
+            return $this->sendResponse($success,'تم تفعيل العميل بنجاح','Customer activated successfully');
+        
+        }elseif($status == 'deactivate'){
+           
+            $user->active = 0;
+            $user->save();
+            $success['status']= 200;
+            return $this->sendResponse($success,'تم تعطيل العميل بنجاح','Customer deactivated successfully');
+        
+        }else{
+            
+            return $this->sendError('الصفحة غير موجودة','Page not Found!',404);
+
+        }
+        
+        
+    }
 
 
 }

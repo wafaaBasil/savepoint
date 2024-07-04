@@ -79,3 +79,10 @@ use App\Http\Controllers\API\AdminDashboard\CouponController;
         });
 
     })->middleware('auth:api');
+
+    Route::prefix("provider-dashboard")->group(function () {
+        Route::controller(\App\Http\Controllers\API\ProviderDashboard\CustomerController::class)->group(function () {
+            Route::get('customers', 'index');
+            Route::get('customer/{id}', 'details');
+        });
+    })->middleware('auth:api');
