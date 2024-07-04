@@ -85,4 +85,10 @@ use App\Http\Controllers\API\AdminDashboard\CouponController;
             Route::get('customers', 'index');
             Route::get('customer/{id}', 'details');
         });
+        Route::controller(\App\Http\Controllers\API\ProviderDashboard\OrderController::class)->group(function () {
+            Route::get('orders', 'index');
+        });
+        Route::controller(\App\Http\Controllers\API\ProviderDashboard\RatingController::class)->group(function () {
+            Route::get('ratings', 'index');
+        });
     });

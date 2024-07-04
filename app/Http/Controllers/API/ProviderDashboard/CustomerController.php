@@ -46,10 +46,10 @@ class CustomerController extends BaseController
         }
 
        if($request->page == null){
-            $orders = $user->customer_orders()->where('provider_id',auth()->user()->id)->get();
+            $orders = $user->customer_orders()->where('provider_id',auth()->user()->provider_id)->get();
             $page_count = null;
         }else{
-            $orders = $user->customer_orders()->where('provider_id',auth()->user()->id)->paginate(10);
+            $orders = $user->customer_orders()->where('provider_id',auth()->user()->provider_id)->paginate(10);
             $page_count = $orders->lastPage();
         }
             
@@ -61,41 +61,7 @@ class CustomerController extends BaseController
 
          return $this->sendResponse($success,'تم ارجاع العميل بنجاح','Customer returned successfully');
     }
-    public function status($status, $id)
-    {
-        $user = User::find($id);
-       
-        if(is_null($user)|| $user->user_type != 'customer'){
-            return $this->sendError('العميل غير موجود','Customer not Found!',404);
-        }
-        if($status == 'delete'){
-           
-            $user->delete();
-            $success['status']= 200;
-            return $this->sendResponse($success,'تم حذف العميل بنجاح','Customer deleted successfully');
-        
-        }elseif($status == 'activate'){
-           
-            $user->active = 1;
-            $user->save();
-            $success['status']= 200;
-            return $this->sendResponse($success,'تم تفعيل العميل بنجاح','Customer activated successfully');
-        
-        }elseif($status == 'deactivate'){
-           
-            $user->active = 0;
-            $user->save();
-            $success['status']= 200;
-            return $this->sendResponse($success,'تم تعطيل العميل بنجاح','Customer deactivated successfully');
-        
-        }else{
-            
-            return $this->sendError('الصفحة غير موجودة','Page not Found!',404);
-
-        }
-        
-        
-    }
+    
 
 
 }
