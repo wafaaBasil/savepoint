@@ -130,7 +130,7 @@ class ProductCategoryController extends BaseController
 
     public function status($status, $id)
     {
-        $category = Category::find($id);
+        $category = ProductCategory::find($id);
        
         if(is_null($category)){
             return $this->sendError('التصنيف غير موجود','Category not Found!',404);
