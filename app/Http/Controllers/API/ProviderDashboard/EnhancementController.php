@@ -47,7 +47,7 @@ class EnhancementController extends BaseController
         ]);
 
         $validator =  Validator::make($input ,[
-            'image' => 'image|required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'name' => 'string|required|max:255',
             'price' => 'numeric|required',
         ],[
             'price.required' => 'حقل السعر مطلوب.',
@@ -91,7 +91,7 @@ class EnhancementController extends BaseController
         ]);
 
         $validator =  Validator::make($input ,[
-            'image' => 'image|required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'name' => 'string|required|max:255',
             'price' => 'numeric|required',
         ],[
             'price.required' => 'حقل السعر مطلوب.',
