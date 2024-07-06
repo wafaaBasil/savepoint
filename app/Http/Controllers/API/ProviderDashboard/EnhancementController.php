@@ -64,8 +64,8 @@ class EnhancementController extends BaseController
         
         
         $enhancement = new Enhancement();
-        $enhancement->image = $request->image;
         $enhancement->name = $request->name;
+        $enhancement->price = $request->price;
         $enhancement->provider_id = auth()->user()->provider_id;
         $enhancement->save();
          
