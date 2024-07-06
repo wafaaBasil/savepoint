@@ -94,8 +94,8 @@ class EnhancementController extends BaseController
             'image' => 'image|required|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'price' => 'numeric|required',
         ],[
-            'image.required' => 'حقل السعر مطلوب.',
-            'image.image' => 'حقل السعر يجب ان يكون رقم.',
+            'price.required' => 'حقل السعر مطلوب.',
+            'price.numeric' => 'حقل السعر يجب ان يكون رقم.',
             'name.required' => 'حقل الاسم مطلوب.',
             'name.max' => 'يجب أن لا يتجاوز طول الاسم 255  .',
             'name.string' => 'يجب ان يكون حقل الاسم نص.',
