@@ -73,7 +73,7 @@ class ProductCategoryController extends BaseController
         $category->provider_id = auth()->user()->provider_id;
         $category->save();
          
-        $success['category']=new ProductCategoryResource($category);
+        $success['category']=new ProductCategoryResource(ProductCategory::find($category->id));
         $success['status']= 200;    
 
         return $this->sendResponse($success,'تم اضافة تصنيف جديد بنجاح','Category created Successfully');

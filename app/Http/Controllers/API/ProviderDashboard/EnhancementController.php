@@ -69,7 +69,7 @@ class EnhancementController extends BaseController
         $enhancement->provider_id = auth()->user()->provider_id;
         $enhancement->save();
          
-        $success['enhancement']=new EnhancementResource($enhancement);
+        $success['enhancement']=new EnhancementResource(Enhancement::find($enhancement->id));
         $success['status']= 200;    
 
         return $this->sendResponse($success,'تم اضافة تصنيف جديد بنجاح','Enhancement created Successfully');
