@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API\ProviderDashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\ProductCategory;
 use Validator;
@@ -116,7 +115,7 @@ class ProductCategoryController extends BaseController
         }
         
         
-        $category = Category::find($id);
+        $category = ProductCategory::find($id);
         if(!is_null($request->image)){
             $category->image = $request->image;
         }
