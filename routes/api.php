@@ -85,7 +85,7 @@ use App\Http\Controllers\API\AdminDashboard\CouponController;
             Route::get('product-categories', 'index');
             Route::post('product-categories/create', 'create');
             Route::put('customer/update/{id}', 'update');
-            Route::delete('customer/status/{id}', 'status');
+            Route::get('customer/status/{id}', 'status');
         });
         Route::controller(\App\Http\Controllers\API\ProviderDashboard\CustomerController::class)->group(function () {
             Route::get('customers', 'index');

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('image')->default('male.jpg');
             $table->string('name');
+            $table->integer('provider_id');
             $table->boolean('active')->default(1);
             $table->softDeletes();
             $table->timestamps();
