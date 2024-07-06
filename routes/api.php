@@ -19,8 +19,8 @@ use App\Http\Controllers\API\AdminDashboard\CouponController;
     })->middleware('auth:api');
 
     Route::controller(AuthController::class)->group(function () {
-        Route::post('login', 'login');
-        Route::get('logout', 'logout');
+        Route::post('login', 'login')->name('login');
+        Route::get('logout', 'logout')->name('logout');
     });
 
     Route::group([      
