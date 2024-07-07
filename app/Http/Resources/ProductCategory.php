@@ -20,7 +20,7 @@ class ProductCategory extends JsonResource
             'id' => $this->id,
             'image' => $this->image,
             'name' => $this->name,
-            'active' => $this->active,
+            'active' => (bool)$this->active,
             'created_at' =>Carbon::parse($this->created_at)->isoFormat('a h:m - YYYY/D ، MMMM'),
         ];
     }

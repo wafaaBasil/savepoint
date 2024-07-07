@@ -26,7 +26,7 @@ class Coupon extends JsonResource
             'top_discount' => $this->top_discount,
             'end_date' => $this->end_date,
             'num_of_use' => $this->num_of_use,
-            'active' => $this->active,
+            'active' => (bool)$this->active,
             'created_at' =>Carbon::parse($this->created_at)->isoFormat('a h:m - YYYY/D ، MMMM'),
         ];
     }

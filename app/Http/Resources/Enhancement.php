@@ -20,7 +20,7 @@ class Enhancement extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'price' => $this->price,
-            'active' => $this->active,
+            'active' => (bool)$this->active,
             'created_at' =>Carbon::parse($this->created_at)->isoFormat('a h:m - YYYY/D ، MMMM'),
         ];
     }

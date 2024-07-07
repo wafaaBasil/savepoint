@@ -31,7 +31,7 @@ class Provider extends JsonResource
             'categories'=>$this->categories,
             'created_at' =>Carbon::parse($this->created_at)->isoFormat('a h:m - YYYY/D ، MMMM'),
             'status' => $this->status,
-            'active' => $this->active,
+            'active' => (bool)$this->active,
             'branches_count' => $this->branches->count(),
             'order_count' => $this->orders->count(),
             'new_order_count' => $this->orders->where('status','جديد')->count(),

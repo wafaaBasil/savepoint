@@ -39,7 +39,7 @@ class Delivery extends JsonResource
             'points' => 0,    /////////////update
             'reward_balance' => 0, /////////////update
             'rating_avg' => $this->ratings()->avg('stars'),
-            'active' => $this->active,
+            'active' => (bool)$this->active,
         ];
     }
 }

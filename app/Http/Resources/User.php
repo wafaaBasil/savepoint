@@ -34,7 +34,7 @@ class User extends JsonResource
             'customer_orders' => $this->customer_orders->count(),
            // 'points' => 0, //later
             //'reward_balance' => 0, //later
-            'active' => $this->active,
+            'active' => (bool)$this->active,
             'created_at' =>Carbon::parse($this->created_at)->isoFormat('YYYY/D ، MMMM'),
         ];
     }
