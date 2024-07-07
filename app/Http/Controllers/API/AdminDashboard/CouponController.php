@@ -45,7 +45,7 @@ class CouponController extends BaseController
             'product_id' => 'numeric|required_if:type,==,product',
             'end_date' => 'required|date',
             //'num_of_use' => 'numeric|required',
-            'active' => 'required|in:0,1',
+            'active' => 'required|boolean',
         ],[
             'image.required' => 'A image is required.',
             'image.image' => 'A image must be an image.',
@@ -69,7 +69,7 @@ class CouponController extends BaseController
             //'num_of_use.required' => 'A num_of_use is required.',
             //'num_of_use.numeric' => 'A num_of_use must be a number.',
             'active.required' => 'A active is required.',
-            'active.in' => 'The selected active is invalid.',
+            'active.boolean' => 'The active must be a boolean.',
         ]);
 
         $validator =  Validator::make($input ,[
@@ -82,7 +82,7 @@ class CouponController extends BaseController
             'provider_id' => 'numeric|required',
             'product_id' => 'numeric|required_if:type,==,product',
             //'num_of_use' => 'numeric|required',
-            'active' => 'required|in:0,1',
+            'active' => 'required|boolean',
         ],[
             'image.required' => 'حقل الصورة مطلوب.',
             'image.image' => 'حقل الصورة يجب ان يكون صورة.',
@@ -106,7 +106,7 @@ class CouponController extends BaseController
             //'num_of_use.required' => 'حقل عدد مرات الاستخدام مطلوب.',
            // 'num_of_use.numeric' => 'يجب ان يكون حقل عدد مرات الاستخدام رقم.',
             'active.required' => 'حقل التفعيل مطلوب.',
-            'active.in' => 'قيمة حقل التفعيل غير صحيح.',
+            'active.boolean' => 'قيمة حقل التفعيل يجب ان تكون boolean.',
         ]);
 
         if ($validator->fails()) 
