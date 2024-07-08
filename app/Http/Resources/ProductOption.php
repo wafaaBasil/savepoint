@@ -17,8 +17,8 @@ class ProductOption extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'content' => (bool)$this->content,
-            'price' => (bool)$this->price,
+            'content' => $this->content,
+            'price' => $this->price,
         ];
     }
 }
