@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Order;
+use App\Models\ProductOption;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -17,13 +17,19 @@ class Product extends JsonResource
     public function toArray(Request $request): array
     {
         Carbon::setLocale('ar');
-
-        
         return [
             'id' => $this->id,
-            'image' => $this->image,
             'name' => $this->name,
-            'price' => $this->price,
+            'name_ar' => $this->name_ar,
+            'details' => $this->details,
+            'category' => new ProductCategory($this->category),
+            'earned_points' => $this->earned_points,
+            'purchase_points' => $this->purchase_points,
+            'images' => ProductImage::collection($this->images),
+            'options' => ProductOption::collection($this->options),
+            'enhancements' => Enhancement::collection($this->enhancements),
+            'active' => (bool)$this->active,
+            'created_at' =>Carbon::parse($this->created_at)->isoFormat('a h:m - YYYY/D ، MMMM'),
         ];
     }
 }

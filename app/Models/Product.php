@@ -4,25 +4,32 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
     use HasFactory;
 
-    
-    public function setImageAttribute($image)
+    public function images(): HasMany
     {
-        if(gettype($image) != 'string') {
-            $i = $image->store('images/products', 'public');
-            $this->attributes['image'] = $image->hashName();
-        } else {
-            $this->attributes['image'] = $image;
-        }
+        return $this->hasMany(ProductImage::class);
     }
 
-    public function getImageAttribute($image)
+    public function options(): HasMany
     {
-        $img = $image?? 'male.jpeg';
-        return asset('storage/images/products') . '/' . $img;
+        return $this->hasMany(ProductOption::class);
     }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(ProductCategory::class);
+    }
+
+    public function enhancement(): BelongsToMany
+    {
+        return $this->belongsToMany(Enhancement::class,'products_enhancements');
+    }
+    
 }
