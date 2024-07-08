@@ -169,9 +169,9 @@ class ProductController extends BaseController
 
         foreach($request->options as $option){
             $new_option = new ProductOption();
-            $new_option->image = $option['name'];
-            $new_option->main = $option['content'];
-            $new_option->main = $option['price'];
+            $new_option->name = $option['name'];
+            $new_option->content = $option['content'];
+            $new_option->price = $option['price'];
             $new_option->product_id = $product->id;
             $new_option->save();
         }
