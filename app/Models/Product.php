@@ -27,7 +27,7 @@ class Product extends Model
         return $this->belongsTo(ProductCategory::class);
     }
 
-    public function enhancement(): BelongsToMany
+    public function enhancements(): BelongsToMany
     {
         return $this->belongsToMany(Enhancement::class,'products_enhancements');
     }
