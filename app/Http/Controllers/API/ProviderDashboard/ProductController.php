@@ -327,13 +327,23 @@ class ProductController extends BaseController
     }
 
     foreach ($request->images as $image) {
-      ProductImage::updateOrCreate([
-        'id' => $image['id'],
-      ], [
-        'image' => $image['image'],
-        'main' => $image['main'],
-        'product_id' => $product->id
-      ]);
+        if(isset($image['image'])){
+            ProductImage::updateOrCreate([
+                'id' => $image['id'],
+              ], [
+                'image' => $image['image'],
+                'main' => $image['main'],
+                'product_id' => $product->id
+              ]);
+        }else{
+            ProductImage::updateOrCreate([
+                'id' => $image['id'],
+              ], [
+                'main' => $image['main'],
+                'product_id' => $product->id
+              ]);
+        }
+      
     }
     
 
