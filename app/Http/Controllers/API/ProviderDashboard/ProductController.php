@@ -264,6 +264,8 @@ class ProductController extends BaseController
             'earned_points.numeric' => 'A earned points must be a number.',
             'purchase_points.required' => 'A purchase points is required.',
             'purchase_points.numeric' => 'A purchase points must be a number.',
+            'price.required' => 'A price is required.',
+            'calories.string' => 'A calories must be a string.',
         ]);
 
         $validator =  Validator::make($input ,[
@@ -326,6 +328,8 @@ class ProductController extends BaseController
             'earned_points.numeric' => 'حقل النقاط التي تحصل عليها يجب ان يكون رقم.',
             'purchase_points.required' => 'حقل النقاط اللازم دفعها مطلوب.',
             'purchase_points.numeric' => 'حقل النقاط اللازم دفعها يجب ان يكون رقم.',
+            'price.required' => 'حقل السعر مطلوب.',
+            'calories.string' => 'حقل السعرات الحرارية يجب ان يكون نص.',
         ]);
 
         if ($validator->fails()) 
