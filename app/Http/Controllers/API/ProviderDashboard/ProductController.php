@@ -209,19 +209,23 @@ class ProductController extends BaseController
             'images.*.id' => 'numeric|nullable',
             'images.*.image' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'images.*.main' => 'boolean|required',
-            'options' => 'required|array',
+            'options' => 'nullable|array',
             'options.*.id' => 'numeric|nullable',
             'options.*.name' => 'string|required|max:255',
-            'options.*.content' => 'string|required',
-            'options.*.price' => 'required',
+            'options.*.content' => 'string|nullable',
+            'options.*.price' => 'nullable',
             'enhancements' => 'required|array',
             'enhancements.*' => 'numeric|required|exists:enhancements,id',
             'name' => 'string|required|max:255',
             'name_ar' => 'string|required|max:255',
             'details' => 'string|required',
-            'category_id' => 'numeric|required|exists:product_categories,id',
+            'categories' => 'required|array',
+            'categories.*' => 'numeric|required|exists:product_categories,id',
             'earned_points' => 'numeric|required',
             'purchase_points' => 'numeric|required',
+            'price' => 'required',
+            'offer_price' => 'nullable',
+            'calories'=>'string|nullable',
         ],[
             'images.required' => 'A images is required.',
             'images.array' => 'A images must be an array.',
@@ -251,9 +255,11 @@ class ProductController extends BaseController
             'name_ar.string' => 'A name (ar) must be a string.',
             'details.required' => 'A details is required.',
             'details.string' => 'A details must be a string.',
-            'category_id.required' => 'A category is required.',
-            'category_id.numeric' => 'A category must be a number.',
-            'category_id.exists' => 'A category not valid.',
+            'categories.required' => 'A categories is required.',
+            'categories.array' => 'A categories must be an array.',
+            'categories.*.required' => 'A categories is required.',
+            'categories.*.numeric' => 'A categories must be a number.',
+            'categories.*.exists' => 'A categories not valid.',
             'earned_points.required' => 'A earned points is required.',
             'earned_points.numeric' => 'A earned points must be a number.',
             'purchase_points.required' => 'A purchase points is required.',
@@ -265,19 +271,23 @@ class ProductController extends BaseController
             'images.*.id' => 'numeric|nullable',
             'images.*.image' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'images.*.main' => 'boolean|required',
-            'options' => 'required|array',
+            'options' => 'nullable|array',
             'options.*.id' => 'numeric|nullable',
             'options.*.name' => 'string|required|max:255',
-            'options.*.content' => 'string|required',
-            'options.*.price' => 'numeric|required',
+            'options.*.content' => 'string|nullable',
+            'options.*.price' => 'nullable',
             'enhancements' => 'required|array',
             'enhancements.*' => 'numeric|required|exists:enhancements,id',
             'name' => 'string|required|max:255',
             'name_ar' => 'string|required|max:255',
             'details' => 'string|required',
-            'category_id' => 'numeric|required|exists:product_categories,id',
+            'categories' => 'required|array',
+            'categories.*' => 'numeric|required|exists:product_categories,id',
             'earned_points' => 'numeric|required',
             'purchase_points' => 'numeric|required',
+            'price' => 'required',
+            'offer_price' => 'nullable',
+            'calories'=>'string|nullable',
         ],[
             'images.required' => 'حقل الصور مطلوب.',
             'images.array' => 'حقل الصور يجب ان يكون مصفوقة.',
@@ -307,9 +317,11 @@ class ProductController extends BaseController
             'name_ar.string' => 'حقل الاسم يجب ان يكون نص.',
             'details.required' => 'حقل المحتوى مطلوب.',
             'details.string' => 'حقل الاسم يجب ان يكون نص.',
-            'category_id.required' => 'حقل التصنيف مطلوب.',
-            'category_id.numeric' => 'حقل التصنيف يجب ان يكون رقم.',
-            'category_id.exists' => 'حقل التصنيف غير صحيح.',
+            'categories.required' => 'حقل الاضافات مطلوب.',
+            'categories.array' => 'حقل الاضافات يجب ان يكون مصفوفة.',
+            'categories.*.required' => 'حقل الاضافات مطلوب.',
+            'categories.*.numeric' => 'حقل الاضافات يجب ان يكون رقم.',
+            'categories.*.exists' => 'حقل الاضافات غير صحيح.',
             'earned_points.required' => 'حقل النقاط التي تحصل عليها مطلوب.',
             'earned_points.numeric' => 'حقل النقاط التي تحصل عليها يجب ان يكون رقم.',
             'purchase_points.required' => 'حقل النقاط اللازم دفعها مطلوب.',
@@ -324,12 +336,15 @@ class ProductController extends BaseController
         $product = Product::find($id);
         $product->name = $request->name;
         $product->name_ar = $request->name_ar;
-        $product->category_id = $request->category_id;
         $product->details = $request->details;
+        $product->price = $request->price;
+        $product->offer_price = $request->offer_price;
+        $product->calories = $request->calories;
         $product->earned_points = $request->earned_points;
         $product->purchase_points = $request->purchase_points;
         $product->provider_id = auth()->user()->provider_id;
         $product->save();
+        $product->categories()->sync($request->categories);
         $product->enhancements()->sync($request->enhancements);
 
         $images_id = ProductImage::where('product_id', $id)->pluck('id')->toArray();
