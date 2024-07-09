@@ -41,18 +41,22 @@ class ProductController extends BaseController
             'images' => 'required|array',
             'images.*.image' => 'image|required|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'images.*.main' => 'boolean|required',
-            'options' => 'required|array',
+            'options' => 'nullable|array',
             'options.*.name' => 'string|required|max:255',
-            'options.*.content' => 'string|required',
-            'options.*.price' => 'required',
+            'options.*.content' => 'string|nullable',
+            'options.*.price' => 'nullable',
             'enhancements' => 'required|array',
             'enhancements.*' => 'numeric|required|exists:enhancements,id',
             'name' => 'string|required|max:255',
             'name_ar' => 'string|required|max:255',
             'details' => 'string|required',
-            'category_id' => 'numeric|required|exists:product_categories,id',
+            'categories' => 'required|array',
+            'categories.*' => 'numeric|required|exists:product_categories,id',
             'earned_points' => 'numeric|required',
             'purchase_points' => 'numeric|required',
+            'price' => 'required',
+            'offer_price' => 'nullable',
+            'calories'=>'string|nullable',
         ],[
             'images.required' => 'A images is required.',
             'images.array' => 'A images must be an array.',
@@ -62,14 +66,11 @@ class ProductController extends BaseController
             'images.*.image.max' => 'A image must not be greater than 2048 kilobytes.',
             'images.*.main.required' => 'A main is required.',
             'images.*.main.boolean' => 'A main must be a boolean.',
-            'options.required' => 'A options is required.',
             'options.array' => 'A options must be an array.',
             'options.*.name.required' => 'A name is required.',
             'options.*.name.string' => 'A name must be a string.',
             'options.*.name.max' => 'A name must not be greater than 255.',
-            'options.*.content.required' => 'A content is required.',
             'options.*.content.string' => 'A content must be a string.',
-            'options.*.price.required' => 'A price is required.',
             'enhancements.required' => 'A enhancements is required.',
             'enhancements.array' => 'A enhancements must be an array.',
             'enhancements.*.required' => 'A enhancements is required.',
@@ -83,31 +84,39 @@ class ProductController extends BaseController
             'name_ar.string' => 'A name (ar) must be a string.',
             'details.required' => 'A details is required.',
             'details.string' => 'A details must be a string.',
-            'category_id.required' => 'A category is required.',
-            'category_id.numeric' => 'A category must be a number.',
-            'category_id.exists' => 'A category not valid.',
+            'categories.required' => 'A categories is required.',
+            'categories.array' => 'A categories must be an array.',
+            'categories.*.required' => 'A categories is required.',
+            'categories.*.numeric' => 'A categories must be a number.',
+            'categories.*.exists' => 'A categories not valid.',
             'earned_points.required' => 'A earned points is required.',
             'earned_points.numeric' => 'A earned points must be a number.',
             'purchase_points.required' => 'A purchase points is required.',
             'purchase_points.numeric' => 'A purchase points must be a number.',
+            'price.required' => 'A price is required.',
+            'calories.string' => 'A calories must be a string.',
         ]);
 
         $validator =  Validator::make($input ,[
             'images' => 'required|array',
             'images.*.image' => 'image|required|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'images.*.main' => 'boolean|required',
-            'options' => 'required|array',
+            'options' => 'nullable|array',
             'options.*.name' => 'string|required|max:255',
-            'options.*.content' => 'string|required',
-            'options.*.price' => 'numeric|required',
+            'options.*.content' => 'string|nullable',
+            'options.*.price' => 'nullable',
             'enhancements' => 'required|array',
             'enhancements.*' => 'numeric|required|exists:enhancements,id',
             'name' => 'string|required|max:255',
             'name_ar' => 'string|required|max:255',
             'details' => 'string|required',
-            'category_id' => 'numeric|required|exists:product_categories,id',
+            'categories' => 'required|array',
+            'categories.*' => 'numeric|required|exists:product_categories,id',
             'earned_points' => 'numeric|required',
             'purchase_points' => 'numeric|required',
+            'price' => 'required',
+            'offer_price' => 'nullable',
+            'calories'=>'string|nullable',
         ],[
             'images.required' => 'حقل الصور مطلوب.',
             'images.array' => 'حقل الصور يجب ان يكون مصفوقة.',
@@ -117,14 +126,11 @@ class ProductController extends BaseController
             'images.*.image.max' => 'يجب أن لا يتجاوز حجم الملف 2048 كيلوبايت .',
             'images.*.main.required' => 'حقل الرئيسية مطلوب.',
             'images.*.main.boolean' => 'حقل الرئيسية يجب ان يكون boolean.',
-            'options.required' => 'حقل الخيارات مطلوب.',
             'options.array' => 'حقل الخيارات يجب ان يكون مصفوفة.',
             'options.*.name.required' => 'حقل الاسم مطلوب.',
             'options.*.name.string' => 'حقل الاسم يجب ان يكون نص.',
             'options.*.name.max' => 'يجب أن لا يتجاوز طول الاسم 255  .',
-            'options.*.content.required' => 'حقل المحتوى مطلوب.',
             'options.*.content.string' => 'حقل المحتوى يجب ان يكون نص.',
-            'options.*.price.required' => 'حقل السعر مطلوب.',
             'enhancements.required' => 'حقل الاضافات مطلوب.',
             'enhancements.array' => 'حقل الاضافات يجب ان يكون مصفوفة.',
             'enhancements.*.required' => 'حقل الاضافات مطلوب.',
@@ -138,13 +144,17 @@ class ProductController extends BaseController
             'name_ar.string' => 'حقل الاسم يجب ان يكون نص.',
             'details.required' => 'حقل المحتوى مطلوب.',
             'details.string' => 'حقل الاسم يجب ان يكون نص.',
-            'category_id.required' => 'حقل التصنيف مطلوب.',
-            'category_id.numeric' => 'حقل التصنيف يجب ان يكون رقم.',
-            'category_id.exists' => 'حقل التصنيف غير صحيح.',
+            'categories.required' => 'حقل الاضافات مطلوب.',
+            'categories.array' => 'حقل الاضافات يجب ان يكون مصفوفة.',
+            'categories.*.required' => 'حقل الاضافات مطلوب.',
+            'categories.*.numeric' => 'حقل الاضافات يجب ان يكون رقم.',
+            'categories.*.exists' => 'حقل الاضافات غير صحيح.',
             'earned_points.required' => 'حقل النقاط التي تحصل عليها مطلوب.',
             'earned_points.numeric' => 'حقل النقاط التي تحصل عليها يجب ان يكون رقم.',
             'purchase_points.required' => 'حقل النقاط اللازم دفعها مطلوب.',
             'purchase_points.numeric' => 'حقل النقاط اللازم دفعها يجب ان يكون رقم.',
+            'price.required' => 'حقل السعر مطلوب.',
+            'calories.string' => 'حقل السعرات الحرارية يجب ان يكون نص.',
         ]);
 
         if ($validator->fails()) 
@@ -155,12 +165,15 @@ class ProductController extends BaseController
         $product = new Product();
         $product->name = $request->name;
         $product->name_ar = $request->name_ar;
-        $product->category_id = $request->category_id;
+        $product->price = $request->price;
+        $product->offer_price = $request->offer_price;
         $product->details = $request->details;
+        $product->calories = $request->calories;
         $product->earned_points = $request->earned_points;
         $product->purchase_points = $request->purchase_points;
         $product->provider_id = auth()->user()->provider_id;
         $product->save();
+        $product->categories()->attach($request->categories);
         $product->enhancements()->attach($request->enhancements);
 
         foreach($request->images as $image){

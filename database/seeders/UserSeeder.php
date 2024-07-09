@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
         User::factory()->create([
             'name' => 'Super Admin',
             'email' => 'admin@gmail.com',
-            'phonenumber' => '51113535',
+            'phonenumber' => '511135350',
             'password' => '123456789',
             'user_type'=>'admin',
             'created_at' => now(),

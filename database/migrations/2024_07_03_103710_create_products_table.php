@@ -15,8 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('name_ar');
+            $table->double('price');
+            $table->double('offer_price')->nullable();
             $table->text('details');
-            $table->integer('category_id');
+            $table->string('calories')->nullable();
+            //$table->integer('category_id');
             $table->integer('provider_id');
             $table->integer('earned_points');
             $table->integer('purchase_points');

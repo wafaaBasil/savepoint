@@ -37,9 +37,8 @@ class EnhancementController extends BaseController
         
         $validator_en =  Validator::make($input ,[
             'name' => 'string|required|max:255',
-            'price' => 'numeric|required',
+            'price' => 'numeric|nullable',
         ],[
-            'price.required' => 'A price is required.',
             'price.numeric' => 'A price must be an number.',
             'name.required' => 'A name is required.',
             'name.max' => 'A name must not be greater than 255.',
@@ -48,9 +47,8 @@ class EnhancementController extends BaseController
 
         $validator =  Validator::make($input ,[
             'name' => 'string|required|max:255',
-            'price' => 'numeric|required',
+            'price' => 'numeric|nullable',
         ],[
-            'price.required' => 'حقل السعر مطلوب.',
             'price.numeric' => 'حقل السعر يجب ان يكون رقم.',
             'name.required' => 'حقل الاسم مطلوب.',
             'name.max' => 'يجب أن لا يتجاوز طول الاسم 255  .',
@@ -81,9 +79,8 @@ class EnhancementController extends BaseController
         
         $validator_en =  Validator::make($input ,[
             'name' => 'string|required|max:255',
-            'price' => 'numeric|required',
+            'price' => 'numeric|nullable',
         ],[
-            'price.required' => 'A price is required.',
             'price.numeric' => 'A price must be an number.',
             'name.required' => 'A name is required.',
             'name.max' => 'A name must not be greater than 255.',
@@ -92,9 +89,8 @@ class EnhancementController extends BaseController
 
         $validator =  Validator::make($input ,[
             'name' => 'string|required|max:255',
-            'price' => 'numeric|required',
+            'price' => 'numeric|nullable',
         ],[
-            'price.required' => 'حقل السعر مطلوب.',
             'price.numeric' => 'حقل السعر يجب ان يكون رقم.',
             'name.required' => 'حقل الاسم مطلوب.',
             'name.max' => 'يجب أن لا يتجاوز طول الاسم 255  .',

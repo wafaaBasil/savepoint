@@ -22,9 +22,9 @@ class Product extends Model
         return $this->hasMany(ProductOption::class);
     }
 
-    public function category(): BelongsTo
+    public function categories(): BelongsToMany
     {
-        return $this->belongsTo(ProductCategory::class,'category_id');
+        return $this->belongsToMany(ProductCategory::class,'products_categories','category_id');
     }
 
     public function enhancements(): BelongsToMany
