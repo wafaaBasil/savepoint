@@ -10,8 +10,9 @@ class OrderProduct extends Model
 {
     use HasFactory;
 
+    
     public function product(): BelongsTo
     {
-        return $this->belongsTo(Product::class,'product_id')->withTrashed();
+        return $this->belongsTo(Product::class)->withTrashed();
     }
 }
