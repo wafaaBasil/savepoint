@@ -25,6 +25,9 @@ class ProductController extends BaseController
         }
        
         
+        $success['new_count']=Product::where('provider_id',auth()->user()->provider_id)->where('status','new')->count();
+        $success['accept_count']=Product::where('provider_id',auth()->user()->provider_id)->where('status','accept')->count();
+        $success['reject_count']=Product::where('provider_id',auth()->user()->provider_id)->where('status','reject')->count();
         $success['products']=ProductResource::collection($products);
         $success['page_count'] = $page_count;
         $success['status']= 200;

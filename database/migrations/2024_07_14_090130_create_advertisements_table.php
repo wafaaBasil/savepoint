@@ -11,20 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('advertisements', function (Blueprint $table) {
             $table->id();
+            $table->string('image')->default('male.jpg');
             $table->string('name');
-            $table->string('name_ar');
-            $table->double('price');
-            $table->double('offer_price')->nullable();
-            $table->text('details');
-            $table->string('calories')->nullable();
-            //$table->integer('category_id');
+            $table->enum('type',['percent','fixed'])->default('percent');
+            $table->string('url')->nullable();
             $table->integer('provider_id');
-            $table->integer('earned_points');
-            $table->integer('purchase_points');
+            $table->date('start_date');
+            $table->integer('num_of_day');
+            $table->text('details');
             $table->boolean('active')->default(1);
-            $table->enum('status', ['new', 'accept', 'reject'])->default('new');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -35,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('advertisements');
     }
 };

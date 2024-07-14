@@ -31,6 +31,7 @@ class Product extends JsonResource
             'options' => ProductOption::collection($this->options),
             'enhancements' => Enhancement::collection($this->enhancements),
             'active' => (bool)$this->active,
+            'status' => $this->status,
             'created_at' =>Carbon::parse($this->created_at)->isoFormat('a h:m - YYYY/D ، MMMM'),
         ];
     }
