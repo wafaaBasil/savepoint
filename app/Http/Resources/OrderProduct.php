@@ -17,7 +17,7 @@ class OrderProduct extends JsonResource
         return [
             'id' => $this->id,
             'product_id' => $this->product->id,
-            'product_image' => $this->product->images()->where('main',1)->first()->image,
+            'product_image' => $this->product->images()->where('main',1)->first() !=null ?? $this->product->images()->where('main',1)->first()->image ,null,
             'product_name' => $this->product->name,
             'product_name_ar' => $this->product->name_ar,
             'amount' => $this->amount,
