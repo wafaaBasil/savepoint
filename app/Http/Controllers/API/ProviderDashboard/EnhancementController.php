@@ -37,9 +37,8 @@ class EnhancementController extends BaseController
         
         $validator_en =  Validator::make($input ,[
             'name' => 'string|required|max:255',
-            'price' => 'numeric|nullable',
+            'price' => 'nullable',
         ],[
-            'price.numeric' => 'A price must be an number.',
             'name.required' => 'A name is required.',
             'name.max' => 'A name must not be greater than 255.',
             'name.string' => 'A name must be a string.',
@@ -47,9 +46,8 @@ class EnhancementController extends BaseController
 
         $validator =  Validator::make($input ,[
             'name' => 'string|required|max:255',
-            'price' => 'numeric|nullable',
+            'price' => 'nullable',
         ],[
-            'price.numeric' => 'حقل السعر يجب ان يكون رقم.',
             'name.required' => 'حقل الاسم مطلوب.',
             'name.max' => 'يجب أن لا يتجاوز طول الاسم 255  .',
             'name.string' => 'يجب ان يكون حقل الاسم نص.',
@@ -79,9 +77,8 @@ class EnhancementController extends BaseController
         
         $validator_en =  Validator::make($input ,[
             'name' => 'string|required|max:255',
-            'price' => 'numeric|nullable',
+            'price' => 'nullable',
         ],[
-            'price.numeric' => 'A price must be an number.',
             'name.required' => 'A name is required.',
             'name.max' => 'A name must not be greater than 255.',
             'name.string' => 'A name must be a string.',
@@ -89,9 +86,8 @@ class EnhancementController extends BaseController
 
         $validator =  Validator::make($input ,[
             'name' => 'string|required|max:255',
-            'price' => 'numeric|nullable',
+            'price' => 'nullable',
         ],[
-            'price.numeric' => 'حقل السعر يجب ان يكون رقم.',
             'name.required' => 'حقل الاسم مطلوب.',
             'name.max' => 'يجب أن لا يتجاوز طول الاسم 255  .',
             'name.string' => 'يجب ان يكون حقل الاسم نص.',

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('num_of_day');
             $table->text('details');
             $table->boolean('active')->default(1);
+            $table->enum('status', ['مؤكد', 'بانتظار الدفع']);
             $table->softDeletes();
             $table->timestamps();
         });

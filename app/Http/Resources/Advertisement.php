@@ -2,11 +2,11 @@
 
 namespace App\Http\Resources;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class Product extends JsonResource
+class Advertisement extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,20 +16,16 @@ class Product extends JsonResource
     public function toArray(Request $request): array
     {
         Carbon::setLocale('ar');
+        
         return [
             'id' => $this->id,
+            'image' => $this->image,
             'name' => $this->name,
-            'name_ar' => $this->name_ar,
+            'type' => $this->type,
+            'url' => $this->url,
+            'start_date' => $this->start_date,
+            'num_of_day' => $this->num_of_day,
             'details' => $this->details,
-            'price' => (string)$this->price,
-            'offer_price' => (string)$this->offer_price,
-            'calories' => $this->calories,
-            'categories' => ProductCategory::collection($this->categories),
-            'earned_points' => $this->earned_points,
-            'purchase_points' => $this->purchase_points,
-            'images' => ProductImage::collection($this->images),
-            'options' => ProductOption::collection($this->options),
-            'enhancements' => Enhancement::collection($this->enhancements),
             'active' => (bool)$this->active,
             'status' => $this->status,
             'created_at' =>Carbon::parse($this->created_at)->isoFormat('a h:m - YYYY/D ، MMMM'),

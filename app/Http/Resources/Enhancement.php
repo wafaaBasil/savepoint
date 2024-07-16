@@ -19,7 +19,7 @@ class Enhancement extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'price' => $this->price,
+            'price' => (string)$this->price,
             'active' => (bool)$this->active,
             'created_at' =>Carbon::parse($this->created_at)->isoFormat('a h:m - YYYY/D ، MMMM'),
         ];

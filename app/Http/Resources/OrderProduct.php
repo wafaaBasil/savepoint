@@ -20,7 +20,7 @@ class OrderProduct extends JsonResource
             'product_image' => $this->product->image,
             'product_name' => $this->product->name,
             'amount' => $this->amount,
-            'price' => $this->price,
+            'price' => (string)$this->price,
         ];
     }
 }

@@ -34,15 +34,15 @@ class Order extends JsonResource
             'delivery_address' => $this->delivery->address,
             'delivery_phonenumber' => $this->delivery->phonenumber,
             'delivery_device_token' => $this->delivery->device_token,
-            'order_price' => $this->order_price,
-            'delivery_price' => $this->delivery_price,
+            'order_price' => (string)$this->order_price,
+            'delivery_price' => (string)$this->delivery_price,
             'coupon' => $this->coupon_discount,  /////////////update
             //'distance_from_store' => $this->distance_from_store,   /////////////update
             'payment_method' =>  new PaymentMethod($this->payment_method),   /////////////update
             //'customer_rating_driver' =>  $this->customer_rating_driver,   /////////////update
             //'driver_rating_customer' =>  $this->driver_rating_customer,   /////////////update
             'product' =>  OrderProduct::collection($this->order_products),   /////////////update
-            'total' => $this->total,
+            'total' => (string)$this->total,
             'status' => $this->status,
             'created_at' =>Carbon::parse($this->created_at)->isoFormat('a h:m - YYYY/D ، MMMM'),
         ];
