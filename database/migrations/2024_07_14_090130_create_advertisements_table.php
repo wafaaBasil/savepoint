@@ -15,14 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('image')->default('male.jpg');
             $table->string('name');
-            $table->enum('type',['percent','fixed'])->default('percent');
+            $table->enum('type',['internal_product','external_link'])->default('internal_product');
             $table->string('url')->nullable();
             $table->integer('provider_id');
             $table->date('start_date');
             $table->integer('num_of_day');
             $table->text('details');
             $table->boolean('active')->default(1);
-            $table->enum('status', ['مؤكد', 'بانتظار الدفع']);
+            $table->enum('status', ['مؤكد', 'بانتظار الدفع'])->default('بانتظار الدفع');
             $table->softDeletes();
             $table->timestamps();
         });
