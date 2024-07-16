@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('payment_method_id')->nullable();
             $table->double('order_price');
             $table->double('delivery_price');
-            $table->integer('copon_id')->nullable();
+            $table->integer('coupon_id')->nullable();
             $table->double('total');
             $table->enum('status', ['جاري التجهيز', 'التوصيل', 'تم التوصيل', 'جديد']);
             $table->timestamps();

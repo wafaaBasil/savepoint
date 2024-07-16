@@ -26,7 +26,10 @@ class Order extends Model
     {
         return $this->belongsTo(Provider::class)->withTrashed();
     }
-
+    public function coupon(): BelongsTo
+    {
+        return $this->belongsTo(Coupon::class)->withTrashed();
+    }
     public function payment_method(): BelongsTo
     {
         return $this->belongsTo(PaymentMethod::class);
