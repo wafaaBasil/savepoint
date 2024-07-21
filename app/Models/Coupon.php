@@ -4,12 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Coupon extends Model
 {
     use HasFactory, SoftDeletes;
-    
+    public function provider(): BelongsTo
+    {
+        return $this->belongsTo(Provider::class)->withTrashed();
+    }
+
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Product::class)->withTrashed();
+    }
     public function setImageAttribute($image)
     {   if(!is_null($image)){
             if(gettype($image) != 'string') {

@@ -19,6 +19,7 @@ class Coupon extends JsonResource
         
         return [
             'id' => $this->id,
+            'coupon_type' => $this->coupon_type,
             'image' => $this->image,
             'name' => $this->name,
             'type' => $this->type,
@@ -28,6 +29,8 @@ class Coupon extends JsonResource
             'num_of_use' => $this->num_of_use,
             'active' => (bool)$this->active,
             'status' => $this->status,
+            'provider' => $this->provider,
+            'product' => $this->product,
             'created_at' =>Carbon::parse($this->created_at)->isoFormat('a h:m - YYYY/D ، MMMM'),
         ];
     }
