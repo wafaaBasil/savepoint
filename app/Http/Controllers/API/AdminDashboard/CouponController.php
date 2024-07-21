@@ -36,7 +36,8 @@ class CouponController extends BaseController
         $input = $request->all();
         
         $validator_en =  Validator::make($input ,[
-            'image' => 'image|required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'coupon_type' => 'required|in:coupon,advertisement',
+            'image' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'name' => 'string|required|unique:coupons,name',
             'type' => 'required|in:percent,fixed,product',
             'discount' => 'required',
@@ -44,9 +45,11 @@ class CouponController extends BaseController
             'provider_id' => 'numeric|required',
             'product_id' => 'numeric|required_if:type,==,product',
             'end_date' => 'required|date',
-            //'num_of_use' => 'numeric|required',
+            'num_of_use' => 'numeric|required_if:coupon_type,==,coupon',
             'active' => 'required|boolean',
         ],[
+            'coupon_type.required' => 'A coupon type is required.',
+            'coupon_type.in' => 'The selected coupon type is invalid.',
             'image.required' => 'A image is required.',
             'image.image' => 'A image must be an image.',
             'image.mimes' => 'A image must be a file of type:jpeg,png,jpg,gif,svg.',
@@ -66,24 +69,27 @@ class CouponController extends BaseController
             'product_id.numeric' => 'A product ust be a number.',
             'end_date.required' => 'A end_date is required.',
             'end_date.date' => 'A end_date must be a date.',
-            //'num_of_use.required' => 'A num_of_use is required.',
-            //'num_of_use.numeric' => 'A num_of_use must be a number.',
+            'num_of_use.required' => 'A num_of_use is required.',
+            'num_of_use.numeric' => 'A num_of_use must be a number.',
             'active.required' => 'A active is required.',
             'active.boolean' => 'The active must be a boolean.',
         ]);
 
         $validator =  Validator::make($input ,[
-            'image' => 'image|required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'coupon_type' => 'required|in:coupon,advertisement',
+            'image' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'name' => 'string|required|unique:coupons,name',
-            'type' => 'required|in:percent,fixed',
+            'type' => 'required|in:percent,fixed,product',
             'discount' => 'required',
             'top_discount' => 'required_if:type,==,percent',
-            'end_date' => 'required|date',
             'provider_id' => 'numeric|required',
             'product_id' => 'numeric|required_if:type,==,product',
-            //'num_of_use' => 'numeric|required',
+            'end_date' => 'required|date',
+            'num_of_use' => 'numeric|required_if:coupon_type,==,coupon',
             'active' => 'required|boolean',
         ],[
+            'coupon_type.required' => 'حفل نوع الكوبون مطلوب.',
+            'coupon_type.in' => 'قيمة حقل نوع الكوبون غير صحيح.',
             'image.required' => 'حقل الصورة مطلوب.',
             'image.image' => 'حقل الصورة يجب ان يكون صورة.',
             'image.mimes' => 'يجب أن يكون حقل الصورة ملفًا من نوع:jpeg,png,jpg,gif,svg.',
@@ -103,8 +109,8 @@ class CouponController extends BaseController
             //'top_discount.numeric' => 'يجب ان يكون حقل الحد الاقصى للخصم رقم.',
             'end_date.required' => 'حقل تاريخ الانتهاء مطلوب.',
             'end_date.date' => 'يجب ان يكون حقل تاريخ الانتهاء تاريخ.',
-            //'num_of_use.required' => 'حقل عدد مرات الاستخدام مطلوب.',
-           // 'num_of_use.numeric' => 'يجب ان يكون حقل عدد مرات الاستخدام رقم.',
+            'num_of_use.required' => 'حقل عدد مرات الاستخدام مطلوب.',
+            'num_of_use.numeric' => 'يجب ان يكون حقل عدد مرات الاستخدام رقم.',
             'active.required' => 'حقل التفعيل مطلوب.',
             'active.boolean' => 'قيمة حقل التفعيل يجب ان تكون boolean.',
         ]);
@@ -116,6 +122,7 @@ class CouponController extends BaseController
         
         
         $coupon = new Coupon();
+        $coupon->coupon_type = $request->coupon_type;
         $coupon->image = $request->image;
         $coupon->name = $request->name;
         $coupon->type = $request->type;
@@ -124,7 +131,7 @@ class CouponController extends BaseController
         $coupon->end_date = $request->end_date;
         $coupon->provider_id = $request->provider_id;
         $coupon->product_id = $request->product_id;
-        $coupon->num_of_use = 1;
+        $coupon->num_of_use = $request->num_of_use;
         $coupon->active = $request->active;
         $coupon->save();
          
@@ -140,15 +147,14 @@ class CouponController extends BaseController
         
         $validator_en =  Validator::make($input ,[
             'image' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'name' => 'string|required|unique:coupons,name,'.$id,
-            'type' => 'required|in:percent,fixed,product',
-            'discount' => 'required',
-            'top_discount' => 'required_if:type,==,percent',
-            'provider_id' => 'numeric|required',
-            'product_id' => 'numeric|required_if:type,==,product',
+            //'name' => 'string|required|unique:coupons,name,'.$id,
+            //'type' => 'required|in:percent,fixed,product',
+            //'discount' => 'required',
+            //'top_discount' => 'required_if:type,==,percent',
+            //'product_id' => 'numeric|required_if:type,==,product',
             'end_date' => 'required|date',
             //'num_of_use' => 'numeric|required',
-            'active' => 'required|in:0,1',
+            //'active' => 'required|in:0,1',
         ],[
             'image.image' => 'A image must be an image.',
             'image.mimes' => 'A image must be a file of type:jpeg,png,jpg,gif,svg.',
@@ -176,15 +182,14 @@ class CouponController extends BaseController
 
         $validator =  Validator::make($input ,[
             'image' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'name' => 'string|required|unique:coupons,name,'.$id,
-            'type' => 'required|in:percent,fixed',
-            'discount' => 'required',
-            'top_discount' => 'required_if:type,==,percent',
+            //'name' => 'string|required|unique:coupons,name,'.$id,
+            //'type' => 'required|in:percent,fixed',
+            //'discount' => 'required',
+            //'top_discount' => 'required_if:type,==,percent',
             'end_date' => 'required|date',
-            'provider_id' => 'numeric|required',
-            'product_id' => 'numeric|required_if:type,==,product',
+            //'product_id' => 'numeric|required_if:type,==,product',
             //'num_of_use' => 'numeric|required',
-            'active' => 'required|in:0,1',
+            //'active' => 'required|in:0,1',
         ],[
             'image.image' => 'حقل الصورة يجب ان يكون صورة.',
             'image.mimes' => 'يجب أن يكون حقل الصورة ملفًا من نوع:jpeg,png,jpg,gif,svg.',
@@ -222,15 +227,17 @@ class CouponController extends BaseController
         if(!is_null($request->image)){
             $coupon->image = $request->image;
         }
-        $coupon->name = $request->name;
+        /*$coupon->name = $request->name;
         $coupon->type = $request->type;
         $coupon->discount = $request->discount;
         $coupon->top_discount = $request->top_discount;
+        */
+        
+       // $coupon->coupon_type = $request->coupon_type;
         $coupon->end_date = $request->end_date;
-        $coupon->provider_id = $request->provider_id;
-        $coupon->product_id = $request->product_id;
-        $coupon->num_of_use = 1;
-        $coupon->active = $request->active;
+        //$coupon->product_id = $request->product_id;
+        //$coupon->num_of_use = $request->num_of_use;
+        //$coupon->active = $request->active;
         $coupon->save();
          
         $success['coupon']=new CouponResource($coupon);
@@ -251,6 +258,22 @@ class CouponController extends BaseController
             $coupon->delete();
             $success['status']= 200;
             return $this->sendResponse($success,'تم حذف الكوبون بنجاح','Coupon deleted successfully');
+        
+        }
+        elseif($status == 'accept'){
+           
+            $coupon->status = 'accept';
+            $coupon->save();
+            $success['status']= 200;
+            return $this->sendResponse($success,'تم قبول الكوبون بنجاح','Coupon accepted successfully');
+        
+        }
+        elseif($status == 'reject'){
+           
+            $coupon->active = 'reject';
+            $coupon->save();
+            $success['status']= 200;
+            return $this->sendResponse($success,'تم رفض الكوبون بنجاح','Coupon rejected successfully');
         
         }
         elseif($status == 'activate'){
