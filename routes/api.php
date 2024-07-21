@@ -81,6 +81,14 @@ use App\Http\Controllers\API\AdminDashboard\CouponController;
     });
 
     Route::prefix("provider-dashboard")->middleware('auth:api')->group(function () {
+        
+        Route::controller(\App\Http\Controllers\API\ProviderDashboard\CouponController::class)->group(function () {
+            Route::get('coupons', 'index');
+            Route::post('coupons/create', 'create');
+            Route::post('coupons/update/{id}', 'update');
+            Route::get('{status}-coupon/{id}', 'status');
+        });
+
         Route::controller(\App\Http\Controllers\API\ProviderDashboard\AdvertisementController::class)->group(function () {
             Route::get('advertisements', 'index');
             Route::post('advertisements/create', 'create');
