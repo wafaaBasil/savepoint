@@ -17,7 +17,7 @@ class Coupon extends Model
 
     public function product(): BelongsTo
     {
-        return $this->belongsTo(Product::class)->withTrashed();
+        return $this->belongsTo(Product::class);
     }
     public function setImageAttribute($image)
     {   if(!is_null($image)){
