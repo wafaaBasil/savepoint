@@ -45,7 +45,6 @@ class CouponController extends BaseController
             //'provider_id' => 'numeric|required',
             'product_id' => 'numeric|required_if:type,==,product',
             'end_date' => 'required|date',
-            'num_of_use' => 'numeric|required_if:coupon_type,==,coupon',
             'active' => 'required|boolean',
         ],[
             'coupon_type.required' => 'A coupon type is required.',
