@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('coupons', function (Blueprint $table) {
             $table->id();
-            $table->string('image')->default('male.jpg');
+            $table->enum('coupon_type',['coupon','advertisement'])->default('coupon');
+            $table->string('image')->nullable();
             $table->string('name');
             $table->enum('type',['percent','fixed'])->default('percent');
             $table->double('discount');
@@ -21,8 +22,9 @@ return new class extends Migration
             $table->integer('provider_id');
             $table->integer('product_id')->nullable();
             $table->timestamp('end_date');
-            $table->integer('num_of_use');
+            $table->integer('num_of_use')->nullable();
             $table->boolean('active')->default(1);
+            $table->enum('status', ['new', 'accept', 'reject'])->default('new');
             $table->softDeletes();
             $table->timestamps();
         });
