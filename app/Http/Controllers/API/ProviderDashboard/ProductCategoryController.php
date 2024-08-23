@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\API\ProviderDashboard;
 
+use App\Exports\ProductCategoryExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ProductCategory;
+use Maatwebsite\Excel\Facades\Excel;
 use Validator;
 use App\Http\Resources\ProductCategory as ProductCategoryResource;
 use App\Http\Controllers\API\BaseController as BaseController;
@@ -12,6 +14,21 @@ use App\Http\Controllers\API\BaseController as BaseController;
 
 class ProductCategoryController extends BaseController
 {
+
+    public function export($type) 
+    {
+        if($type== 'excel'){
+            return Excel::download(new ProductCategoryExport, 'products_categories.xlsx');
+        }elseif($type== 'csv'){
+            return Excel::download(new ProductCategoryExport, 'products_categories.csv');
+        }elseif($type== 'pdf'){
+
+        }else{
+            abort(404);
+        }
+       
+    }
+
     public function index(Request $request)
     {
         if($request->page == null){

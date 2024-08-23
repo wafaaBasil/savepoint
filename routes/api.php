@@ -16,7 +16,7 @@ use App\Http\Controllers\API\AdminDashboard\CouponController;
 
     Route::get('/user', function (Request $request) {
         return $request->user();
-    })->middleware('auth:api');
+    })->middleware('auth:sanctum');
 
     Route::controller(AuthController::class)->group(function () {
         Route::post('login', 'login')->name('login');
@@ -36,7 +36,7 @@ use App\Http\Controllers\API\AdminDashboard\CouponController;
 });
     
 
-    Route::prefix("admin-dashboard")->middleware('auth:api')->group(function () {
+    Route::prefix("admin-dashboard")->middleware('auth:sanctum')->group(function () {
         Route::controller(CustomerController::class)->group(function () {
             Route::get('customers', 'index');
             Route::get('customer/{id}', 'details');
@@ -80,7 +80,7 @@ use App\Http\Controllers\API\AdminDashboard\CouponController;
 
     });
 
-    Route::prefix("provider-dashboard")->middleware('auth:api')->group(function () {
+    Route::prefix("provider-dashboard")->middleware('auth:sanctum')->group(function () {
         
         Route::controller(\App\Http\Controllers\API\ProviderDashboard\CouponController::class)->group(function () {
             Route::get('coupons', 'index');
@@ -103,6 +103,7 @@ use App\Http\Controllers\API\AdminDashboard\CouponController;
         });
         Route::controller(\App\Http\Controllers\API\ProviderDashboard\ProductCategoryController::class)->group(function () {
             Route::get('product-categories', 'index');
+            Route::get('product-categories/export/{type}', 'export');
             Route::post('product-categories/create', 'create');
             Route::put('product-categories/update/{id}', 'update');
             Route::get('product-categories/{status}/{id}', 'status');

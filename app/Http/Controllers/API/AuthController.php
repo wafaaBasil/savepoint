@@ -69,7 +69,7 @@ class AuthController  extends BaseController
          
         $success['user_type']=$user->user_type;
         $success['user']=new UserResource($user);
-        $success['token']= $user->createToken('authToken')->accessToken;
+        $success['token']= $user->createToken('authToken')->plainTextToken;
         $success['status']= 200;    
 
         return $this->sendResponse($success,'تم تسجيل الدخول بنجاح','Login Successfully');
@@ -79,13 +79,13 @@ class AuthController  extends BaseController
     public function logout()
     {
        
-        if(is_null(auth("api")->user())){
+        if(is_null(auth("sanctum")->user())){
           //return  response()->json(['error' => 'Unauthenticated.'], 401);
           return $this->sendError('غير مصرح به','Unauthenticated',401);
         }
         
-         $user = auth("api")->user()->token();
-        auth("api")->user()->update([
+         $user = auth("sanctum")->user()->token();
+        auth("sanctum")->user()->update([
             'device_token' => ""
             ]);
         $user->revoke();
