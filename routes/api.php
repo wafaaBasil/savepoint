@@ -80,7 +80,7 @@ use App\Http\Controllers\API\AdminDashboard\CouponController;
 
     });
 
-    Route::prefix("provider-dashboard")->middleware('auth:sanctum')->group(function () {
+    Route::prefix("provider-dashboard")->group(function () {
         
         Route::controller(\App\Http\Controllers\API\ProviderDashboard\CouponController::class)->group(function () {
             Route::get('coupons', 'index');
