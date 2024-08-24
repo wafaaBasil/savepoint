@@ -32,10 +32,10 @@ class ProductCategoryController extends BaseController
     public function index(Request $request)
     {
         if($request->page == null){
-            $categories = ProductCategory::where('provider_id',auth()->user()->provider_id)->orderBy('created_at','desc')->get();
+            $categories = ProductCategory::where('provider_id',auth("sanctum")->user()->provider_id)->orderBy('created_at','desc')->get();
             $page_count = null;
         }else{
-            $categories = ProductCategory::where('provider_id',auth()->user()->provider_id)->orderBy('created_at','desc')->paginate(10);
+            $categories = ProductCategory::where('provider_id',auth("sanctum")->user()->provider_id)->orderBy('created_at','desc')->paginate(10);
             $page_count = $categories->lastPage();
         }
        
@@ -87,7 +87,7 @@ class ProductCategoryController extends BaseController
         $category = new ProductCategory();
         $category->image = $request->image;
         $category->name = $request->name;
-        $category->provider_id = auth()->user()->provider_id;
+        $category->provider_id = auth("sanctum")->user()->provider_id;
         $category->save();
          
         $success['category']=new ProductCategoryResource(ProductCategory::find($category->id));

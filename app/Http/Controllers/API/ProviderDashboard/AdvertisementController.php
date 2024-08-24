@@ -15,10 +15,10 @@ class AdvertisementController extends BaseController
     public function index(Request $request)
     {
         if($request->page == null){
-            $advertisements = Advertisement::where('provider_id',auth()->user()->provider_id)->orderBy('created_at','desc')->get();
+            $advertisements = Advertisement::where('provider_id',auth("sanctum")->user()->provider_id)->orderBy('created_at','desc')->get();
             $page_count = null;
         }else{
-            $advertisements = Advertisement::where('provider_id',auth()->user()->provider_id)->orderBy('created_at','desc')->paginate(10);
+            $advertisements = Advertisement::where('provider_id',auth("sanctum")->user()->provider_id)->orderBy('created_at','desc')->paginate(10);
             $page_count = $advertisements->lastPage();
         }
        
@@ -104,7 +104,7 @@ class AdvertisementController extends BaseController
         $advertisement->details = $request->details;
         $advertisement->start_date = $request->start_date;
         $advertisement->num_of_day = $request->num_of_day;
-        $advertisement->provider_id = auth()->user()->provider_id;
+        $advertisement->provider_id = auth("sanctum")->user()->provider_id;
         $advertisement->save();
 
         
@@ -190,7 +190,7 @@ class AdvertisementController extends BaseController
         $advertisement->details = $request->details;
         $advertisement->start_date = $request->start_date;
         $advertisement->num_of_day = $request->num_of_day;
-        $advertisement->provider_id = auth()->user()->provider_id;
+        $advertisement->provider_id = auth("sanctum")->user()->provider_id;
         $advertisement->save();
          
         $success['advertisement']=new AdvertisementResource(Advertisement::find($advertisement->id));
