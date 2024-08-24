@@ -15,10 +15,10 @@ class EnhancementController extends BaseController
     public function index(Request $request)
     {
         if($request->page == null){
-            $enhancements = Enhancement::where('provider_id',auth()->user()->provider_id)->orderBy('created_at','desc')->get();
+            $enhancements = Enhancement::where('provider_id',auth("sanctum")->user()->provider_id)->orderBy('created_at','desc')->get();
             $page_count = null;
         }else{
-            $enhancements = Enhancement::where('provider_id',auth()->user()->provider_id)->orderBy('created_at','desc')->paginate(10);
+            $enhancements = Enhancement::where('provider_id',auth("sanctum")->user()->provider_id)->orderBy('created_at','desc')->paginate(10);
             $page_count = $enhancements->lastPage();
         }
        
@@ -62,7 +62,7 @@ class EnhancementController extends BaseController
         $enhancement = new Enhancement();
         $enhancement->name = $request->name;
         $enhancement->price = $request->price;
-        $enhancement->provider_id = auth()->user()->provider_id;
+        $enhancement->provider_id = auth("sanctum")->user()->provider_id;
         $enhancement->save();
          
         $success['enhancement']=new EnhancementResource(Enhancement::find($enhancement->id));

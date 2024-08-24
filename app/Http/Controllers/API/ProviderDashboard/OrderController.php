@@ -16,10 +16,10 @@ class OrderController extends BaseController
     public function index(Request $request)
     {
         if($request->page == null){
-            $orders = Order::where('provider_id',auth()->user()->provider_id)->orderBy('created_at','desc')->get();
+            $orders = Order::where('provider_id',auth("sanctum")->user()->provider_id)->orderBy('created_at','desc')->get();
             $page_count = null;
         }else{
-            $orders = Order::where('provider_id',auth()->user()->provider_id)->orderBy('created_at','desc')->paginate(10);
+            $orders = Order::where('provider_id',auth("sanctum")->user()->provider_id)->orderBy('created_at','desc')->paginate(10);
             $page_count = $orders->lastPage();
         }
 

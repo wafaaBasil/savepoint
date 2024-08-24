@@ -17,12 +17,12 @@ class CustomerController extends BaseController
     {
         if($request->page == null){
             $users = User::where('user_type','customer')->whereHas('customer_orders.provider', function ($query){
-                $query->where('id', auth()->user()->provider_id);
+                $query->where('id', auth("sanctum")->user()->provider_id);
             })->orderBy('created_at','desc')->get();
             $page_count = null;
         }else{
             $users = User::where('user_type','customer')->whereHas('customer_orders.provider', function ($query){
-                $query->where('id', auth()->user()->provider_id);
+                $query->where('id', auth("sanctum")->user()->provider_id);
             })->orderBy('created_at','desc')->paginate(10);
             $page_count = $users->lastPage();
         }
@@ -40,16 +40,16 @@ class CustomerController extends BaseController
        $user = User::find($id);
        
        if(is_null($user)|| $user->user_type != 'customer' || is_null($user->whereHas('customer_orders.provider', function ($query){
-        $query->where('id', auth()->user()->provider_id);
+        $query->where('id', auth("sanctum")->user()->provider_id);
     }))){
             return $this->sendError('العميل غير موجود','Customer not Found!',404);
         }
 
        if($request->page == null){
-            $orders = $user->customer_orders()->where('provider_id',auth()->user()->provider_id)->get();
+            $orders = $user->customer_orders()->where('provider_id',auth("sanctum")->user()->provider_id)->get();
             $page_count = null;
         }else{
-            $orders = $user->customer_orders()->where('provider_id',auth()->user()->provider_id)->paginate(10);
+            $orders = $user->customer_orders()->where('provider_id',auth("sanctum")->user()->provider_id)->paginate(10);
             $page_count = $orders->lastPage();
         }
             

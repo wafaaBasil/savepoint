@@ -15,10 +15,10 @@ class CouponController extends BaseController
     public function index(Request $request)
     {
         if($request->page == null){
-            $coupons = Coupon::where('provider_id',auth()->user()->provider_id)->orderBy('created_at','desc')->get();
+            $coupons = Coupon::where('provider_id',auth("sanctum")->user()->provider_id)->orderBy('created_at','desc')->get();
             $page_count = null;
         }else{
-            $coupons = Coupon::where('provider_id',auth()->user()->provider_id)->orderBy('created_at','desc')->paginate(10);
+            $coupons = Coupon::where('provider_id',auth("sanctum")->user()->provider_id)->orderBy('created_at','desc')->paginate(10);
             $page_count = $coupons->lastPage();
         }
        
@@ -129,7 +129,7 @@ class CouponController extends BaseController
         $coupon->discount = $request->discount;
         $coupon->top_discount = $request->top_discount;
         $coupon->end_date = $request->end_date;
-        $coupon->provider_id = auth()->user()->provider_id;
+        $coupon->provider_id = auth("sanctum")->user()->provider_id;
         $coupon->product_id = $request->product_id;
         $coupon->num_of_use = $request->num_of_use;
         $coupon->active = $request->active;

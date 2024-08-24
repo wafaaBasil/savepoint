@@ -17,17 +17,17 @@ class ProductController extends BaseController
     public function index(Request $request)
     {
         if($request->page == null){
-            $products = Product::where('provider_id',auth()->user()->provider_id)->orderBy('created_at','desc')->get();
+            $products = Product::where('provider_id',auth("sanctum")->user()->provider_id)->orderBy('created_at','desc')->get();
             $page_count = null;
         }else{
-            $products = Product::where('provider_id',auth()->user()->provider_id)->orderBy('created_at','desc')->paginate(10);
+            $products = Product::where('provider_id',auth("sanctum")->user()->provider_id)->orderBy('created_at','desc')->paginate(10);
             $page_count = $products->lastPage();
         }
        
         
-        $success['new_count']=Product::where('provider_id',auth()->user()->provider_id)->where('status','new')->count();
-        $success['accept_count']=Product::where('provider_id',auth()->user()->provider_id)->where('status','accept')->count();
-        $success['reject_count']=Product::where('provider_id',auth()->user()->provider_id)->where('status','reject')->count();
+        $success['new_count']=Product::where('provider_id',auth("sanctum")->user()->provider_id)->where('status','new')->count();
+        $success['accept_count']=Product::where('provider_id',auth("sanctum")->user()->provider_id)->where('status','accept')->count();
+        $success['reject_count']=Product::where('provider_id',auth("sanctum")->user()->provider_id)->where('status','reject')->count();
         $success['products']=ProductResource::collection($products);
         $success['page_count'] = $page_count;
         $success['status']= 200;
@@ -160,7 +160,7 @@ class ProductController extends BaseController
         $product->calories = $request->calories;
         $product->earned_points = $request->earned_points;
         $product->purchase_points = $request->purchase_points;
-        $product->provider_id = auth()->user()->provider_id;
+        $product->provider_id = auth("sanctum")->user()->provider_id;
         $product->save();
         $product->categories()->attach($request->categories);
         $product->enhancements()->attach($request->enhancements);
@@ -324,7 +324,7 @@ class ProductController extends BaseController
         $product->calories = $request->calories;
         $product->earned_points = $request->earned_points;
         $product->purchase_points = $request->purchase_points;
-        $product->provider_id = auth()->user()->provider_id;
+        $product->provider_id = auth("sanctum")->user()->provider_id;
         $product->save();
         $product->categories()->sync($request->categories);
         $product->enhancements()->sync($request->enhancements);
