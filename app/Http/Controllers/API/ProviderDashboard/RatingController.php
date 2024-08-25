@@ -33,7 +33,7 @@ class RatingController extends BaseController
     {
         $rating = Rating::find($id);
        
-        if(is_null($rating) || $rating->provider_id == auth("sanctum")->user()->provider_id){
+        if(is_null($rating) || $rating->provider_id != auth("sanctum")->user()->provider_id){
             return $this->sendError('التقييم غير موجود','Rating not Found!',404);
         }
         
