@@ -26,6 +26,7 @@ return new class extends Migration
             $table->enum('user_type', ['admin', 'admin_employee', 'provider_admin', 'provider_employee',
              'customer', 'delivery']);
              $table->integer('provider_id')->nullable();
+             $table->integer('branch_id')->nullable();
              $table->boolean('active')->default(1);
              $table->timestamp('last_login_at')->nullable();
              $table->timestamp('code_expires_at')->nullable();

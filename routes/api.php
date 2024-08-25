@@ -125,4 +125,10 @@ use App\Http\Controllers\API\AdminDashboard\CouponController;
             Route::get('ratings', 'index');
             Route::get('ratings/{status}/{id}', 'status');
         });
+        Route::controller(\App\Http\Controllers\API\ProviderDashboard\UserController::class)->group(function () {
+            Route::get('users', 'index');
+            Route::post('users/create', 'create');
+            Route::put('users/update/{id}', 'update');
+            Route::get('users/{status}/{id}', 'status');
+        });
     });
