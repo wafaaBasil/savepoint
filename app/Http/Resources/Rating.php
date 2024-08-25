@@ -19,7 +19,8 @@ class Rating extends JsonResource
             'user_name' => $this->from_user->name, 
             'user_image' => $this->from_user->image,
             'stars' => $this->stars,
-            'comment' => $this->comment
+            'comment' => $this->comment,
+            'active' => (bool)$this->active,
         ];
     }
 }

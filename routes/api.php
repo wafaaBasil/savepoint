@@ -123,5 +123,6 @@ use App\Http\Controllers\API\AdminDashboard\CouponController;
         });
         Route::controller(\App\Http\Controllers\API\ProviderDashboard\RatingController::class)->group(function () {
             Route::get('ratings', 'index');
+            Route::get('ratings/{status}/{id}', 'status');
         });
     });

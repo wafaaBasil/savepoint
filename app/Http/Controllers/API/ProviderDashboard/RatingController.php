@@ -28,6 +28,37 @@ class RatingController extends BaseController
 
          return $this->sendResponse($success,'تم ارجاع التقييمات بنجاح','Ratings returned successfully');
     }
+
+    public function status($status, $id)
+    {
+        $rating = Rating::find($id);
+       
+        if(is_null($rating)){
+            return $this->sendError('التقييم غير موجود','Rating not Found!',404);
+        }
+        
+        if($status == 'activate'){
+           
+            $rating->active = 1;
+            $rating->save();
+            $success['status']= 200;
+            return $this->sendResponse($success,'تم تفعيل التقييم بنجاح','Rating activated successfully');
+        
+        }elseif($status == 'deactivate'){
+           
+            $rating->active = 0;
+            $rating->save();
+            $success['status']= 200;
+            return $this->sendResponse($success,'تم تعطيل التقييم بنجاح','Rating deactivated successfully');
+        
+        }else{
+            
+            return $this->sendError('الصفحة غير موجودة','Page not Found!',404);
+
+        }
+        
+        
+    }
     
 
 }
