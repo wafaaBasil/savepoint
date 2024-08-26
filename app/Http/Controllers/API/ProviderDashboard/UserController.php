@@ -111,6 +111,10 @@ class UserController extends BaseController
     
         $user = User::find($id);
         
+        if(is_null($user) || $user->user_type != 'provider_employee'){
+            return $this->sendError('المستخدم غير موجود','User not Found!',404);
+        }
+
         $validator_en =  Validator::make($input ,[
             'name' => 'string|required|max:255',
             'phonenumber' => 'string|required|max:255',
@@ -182,7 +186,7 @@ class UserController extends BaseController
     {
         $user = User::find($id);
        
-        if(is_null($user)){
+        if(is_null($user) || $user->user_type != 'provider_employee'){
             return $this->sendError('المستخدم غير موجود','User not Found!',404);
         }
         if($status == 'delete'){
