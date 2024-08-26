@@ -96,6 +96,7 @@ class UserController extends BaseController
         $user->provider_id = auth("sanctum")->user()->provider_id;
         $user->active = $request->active;
         $user->password = $request->password;
+        $user->user_type = 'provider_employee';
         $user->save();
 
         $success['user']=new UserResource(User::find($user->id));
