@@ -43,6 +43,7 @@ class UserController extends BaseController
             'email' => 'email|required|unique:users,email',
             'branch_id' => 'numeric|required|exists:branches,id',
             'active' => 'required|boolean',
+            'password' => ['required','confirmed','string','min:6'],
         ],[
             'name.required' => 'A name is required.',
             'name.max' => 'A name must not be greater than 255.',
@@ -65,6 +66,7 @@ class UserController extends BaseController
             'email' => 'email|required|unique:users,email',
             'branch_id' => 'numeric|required|exists:branches,id',
             'active' => 'required|boolean',
+            'password' => ['required','confirmed','string','min:6'],
         ],[
             'name.required' => 'حقل الاسم مطلوب.',
             'name.max' => 'يجب أن لا يتجاوز طول الاسم 255  .',
@@ -93,6 +95,7 @@ class UserController extends BaseController
         $user->branch_id = $request->branch_id;
         $user->provider_id = auth("sanctum")->user()->provider_id;
         $user->active = $request->active;
+        $user->password = $request->password;
         $user->save();
 
         $success['user']=new UserResource(User::find($user->id));
@@ -113,6 +116,7 @@ class UserController extends BaseController
             'email' => 'email|required|unique:users,email,'.$user->id.',id',
             'branch_id' => 'numeric|required|exists:branches,id',
             'active' => 'required|boolean',
+            'password' => ['nullable','confirmed','string','min:6'],
         ],[
             'name.required' => 'A name is required.',
             'name.max' => 'A name must not be greater than 255.',
@@ -135,6 +139,7 @@ class UserController extends BaseController
             'email' => 'email|required|unique:users,email,'.$user->id.',id',
             'branch_id' => 'numeric|required|exists:branches,id',
             'active' => 'required|boolean',
+            'password' => ['nullable','confirmed','string','min:6'],
         ],[
             'name.required' => 'حقل الاسم مطلوب.',
             'name.max' => 'يجب أن لا يتجاوز طول الاسم 255  .',
@@ -161,6 +166,9 @@ class UserController extends BaseController
         $user->phonenumber = $request->phonenumber;
         $user->branch_id = $request->branch_id;
         $user->active = $request->active;
+        if(!is_null($user->password)){
+            $user->password = $request->password;
+        }
         $user->save();
          
         $success['user']=new UserResource(User::find($user->id));
