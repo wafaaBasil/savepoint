@@ -11,17 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('providers', function (Blueprint $table) {
+        Schema::create('branches', function (Blueprint $table) {
             $table->id();
-            $table->string('logo')->default('male.jpg');
             $table->string('name');
             $table->string('phonenumber');
+            $table->integer('city_id');
             $table->string('address');
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
-            //$table->integer('provider_id')->nullable();
+            $table->integer('provider_id');
             $table->boolean('active')->default(1);
-            $table->enum('status', ['new', 'accept', 'reject'])->default('new');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('providers');
+        Schema::dropIfExists('branches');
     }
 };

@@ -3,33 +3,33 @@
 namespace App\Http\Controllers\API\ProviderDashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\UserImage;
-use App\Models\UserOption;
+use App\Models\BranchImage;
+use App\Models\BranchOption;
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\Branch;
 use Validator;
-use App\Http\Resources\User as UserResource;
+use App\Http\Resources\Branch as BranchResource;
 use App\Http\Controllers\API\BaseController as BaseController;
 
 
-class UserController extends BaseController
+class BranchController extends BaseController
 {
     public function index(Request $request)
     {
         if($request->page == null){
-            $users = User::where('provider_id',auth("sanctum")->user()->provider_id)->where('user_type','provider_employee')->orderBy('created_at','desc')->get();
+            $branchs = Branch::where('provider_id',auth("sanctum")->user()->provider_id)->where('user_type','provider_employee')->orderBy('created_at','desc')->get();
             $page_count = null;
         }else{
-            $users = User::where('provider_id',auth("sanctum")->user()->provider_id)->where('user_type','provider_employee')->orderBy('created_at','desc')->paginate(10);
-            $page_count = $users->lastPage();
+            $branchs = Branch::where('provider_id',auth("sanctum")->user()->provider_id)->where('user_type','provider_employee')->orderBy('created_at','desc')->paginate(10);
+            $page_count = $branchs->lastPage();
         }
        
         
-        $success['users']=UserResource::collection($users);
+        $success['branchs']=BranchResource::collection($branchs);
         $success['page_count'] = $page_count;
         $success['status']= 200;
 
-         return $this->sendResponse($success,'تم ارجاع المستخدمين بنجاح','Users returned successfully');
+         return $this->sendResponse($success,'تم ارجاع الأفرع بنجاح','Branchs returned successfully');
     }
 
    
@@ -40,7 +40,7 @@ class UserController extends BaseController
         $validator_en =  Validator::make($input ,[
             'name' => 'string|required|max:255',
             'phonenumber' => 'string|required|max:255',
-            'email' => 'email|required|unique:users,email',
+            'email' => 'email|required|unique:branchs,email',
             'branch_id' => 'numeric|required|exists:branches,id',
             'active' => 'required|boolean',
         ],[
@@ -62,7 +62,7 @@ class UserController extends BaseController
         $validator =  Validator::make($input ,[
             'name' => 'string|required|max:255',
             'phonenumber' => 'string|required|max:255',
-            'email' => 'email|required|unique:users,email',
+            'email' => 'email|required|unique:branchs,email',
             'branch_id' => 'numeric|required|exists:branches,id',
             'active' => 'required|boolean',
         ],[
@@ -86,31 +86,31 @@ class UserController extends BaseController
             return $this->sendValidationError($validator->errors(),$validator_en->errors());
         }
         
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->phonenumber = $request->phonenumber;
-        $user->branch_id = $request->branch_id;
-        $user->provider_id = auth("sanctum")->user()->provider_id;
-        $user->active = $request->active;
-        $user->save();
+        $branch = new Branch();
+        $branch->name = $request->name;
+        $branch->email = $request->email;
+        $branch->phonenumber = $request->phonenumber;
+        $branch->branch_id = $request->branch_id;
+        $branch->provider_id = auth("sanctum")->user()->provider_id;
+        $branch->active = $request->active;
+        $branch->save();
 
-        $success['user']=new UserResource(User::find($user->id));
+        $success['branch']=new BranchResource(Branch::find($branch->id));
         $success['status']= 200;    
 
-        return $this->sendResponse($success,'تم اضافة مستخدم جديد بنجاح','User created Successfully');
+        return $this->sendResponse($success,'تم اضافة فرع جديد بنجاح','Branch created Successfully');
     }
 
     public function update(Request $request, $id)
     {
         $input = $request->all();
     
-        $user = User::find($id);
+        $branch = Branch::find($id);
         
         $validator_en =  Validator::make($input ,[
             'name' => 'string|required|max:255',
             'phonenumber' => 'string|required|max:255',
-            'email' => 'email|required|unique:users,email,'.$user->id.',id',
+            'email' => 'email|required|unique:branchs,email,'.$branch->id.',id',
             'branch_id' => 'numeric|required|exists:branches,id',
             'active' => 'required|boolean',
         ],[
@@ -132,7 +132,7 @@ class UserController extends BaseController
         $validator =  Validator::make($input ,[
             'name' => 'string|required|max:255',
             'phonenumber' => 'string|required|max:255',
-            'email' => 'email|required|unique:users,email,'.$user->id.',id',
+            'email' => 'email|required|unique:branchs,email,'.$branch->id.',id',
             'branch_id' => 'numeric|required|exists:branches,id',
             'active' => 'required|boolean',
         ],[
@@ -156,48 +156,48 @@ class UserController extends BaseController
             return $this->sendValidationError($validator->errors(),$validator_en->errors());
         }
         
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->phonenumber = $request->phonenumber;
-        $user->branch_id = $request->branch_id;
-        $user->active = $request->active;
-        $user->save();
+        $branch->name = $request->name;
+        $branch->email = $request->email;
+        $branch->phonenumber = $request->phonenumber;
+        $branch->branch_id = $request->branch_id;
+        $branch->active = $request->active;
+        $branch->save();
          
-        $success['user']=new UserResource(User::find($user->id));
+        $success['branch']=new BranchResource(Branch::find($branch->id));
         $success['status']= 200;    
 
-        return $this->sendResponse($success,'تم تعديل مستخدم بنجاح','User updated Successfully');
+        return $this->sendResponse($success,'تم تعديل فرع بنجاح','Branch updated Successfully');
     }
 
     public function status($status, $id)
     {
-        $user = User::find($id);
+        $branch = Branch::find($id);
        
-        if(is_null($user)){
-            return $this->sendError('المستخدم غير موجود','User not Found!',404);
+        if(is_null($branch)){
+            return $this->sendError('الفرع غير موجود','Branch not Found!',404);
         }
         if($status == 'delete'){
-           $user->images()->delete();
-           $user->options()->delete();
-           $user->enhancements()->delete();
-            $user->delete();
+           $branch->images()->delete();
+           $branch->options()->delete();
+           $branch->enhancements()->delete();
+            $branch->delete();
             $success['status']= 200;
-            return $this->sendResponse($success,'تم حذف المستخدم بنجاح','User deleted successfully');
+            return $this->sendResponse($success,'تم حذف الفرع بنجاح','Branch deleted successfully');
         
         }
         elseif($status == 'activate'){
            
-            $user->active = 1;
-            $user->save();
+            $branch->active = 1;
+            $branch->save();
             $success['status']= 200;
-            return $this->sendResponse($success,'تم تفعيل المستخدم بنجاح','User activated successfully');
+            return $this->sendResponse($success,'تم تفعيل الفرع بنجاح','Branch activated successfully');
         
         }elseif($status == 'deactivate'){
            
-            $user->active = 0;
-            $user->save();
+            $branch->active = 0;
+            $branch->save();
             $success['status']= 200;
-            return $this->sendResponse($success,'تم تعطيل المستخدم بنجاح','User deactivated successfully');
+            return $this->sendResponse($success,'تم تعطيل الفرع بنجاح','Branch deactivated successfully');
         
         }else{
             

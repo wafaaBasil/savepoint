@@ -21,7 +21,7 @@ class Provider extends JsonResource
         
         return [
             'id' => $this->id,
-            'type' => $this->provider_id == null ? 'main':'branch', 
+            //'type' => $this->provider_id == null ? 'main':'branch', 
             'logo' => $this->logo,
             'name' => $this->name,
             'phonenumber' => $this->phonenumber,

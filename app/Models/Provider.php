@@ -22,7 +22,7 @@ class Provider extends Model
     }
         public function branches(): HasMany
     {
-        return $this->hasMany(Provider::class);
+        return $this->hasMany(Branch::class);
     }
     public function orders(): HasMany
     {
