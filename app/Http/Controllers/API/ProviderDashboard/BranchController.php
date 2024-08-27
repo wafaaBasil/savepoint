@@ -17,10 +17,10 @@ class BranchController extends BaseController
     public function index(Request $request)
     {
         if($request->page == null){
-            $branchs = Branch::where('provider_id',auth("sanctum")->user()->provider_id)->where('user_type','provider_employee')->orderBy('created_at','desc')->get();
+            $branchs = Branch::where('provider_id',auth("sanctum")->user()->provider_id)->orderBy('created_at','desc')->get();
             $page_count = null;
         }else{
-            $branchs = Branch::where('provider_id',auth("sanctum")->user()->provider_id)->where('user_type','provider_employee')->orderBy('created_at','desc')->paginate(10);
+            $branchs = Branch::where('provider_id',auth("sanctum")->user()->provider_id)->orderBy('created_at','desc')->paginate(10);
             $page_count = $branchs->lastPage();
         }
        
