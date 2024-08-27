@@ -40,6 +40,7 @@ class BranchController extends BaseController
         $validator_en =  Validator::make($input ,[
             'name' => 'string|required|max:255',
             'phonenumber' => 'string|required|max:255',
+            'address' => 'string|required',
             'city_id' => 'numeric|required|exists:cities,id',
         ],[
             'name.required' => 'A name is required.',
@@ -59,6 +60,7 @@ class BranchController extends BaseController
             'name' => 'string|required|max:255',
             'phonenumber' => 'string|required|max:255',
             'city_id' => 'numeric|required|exists:cities,id',
+            'address' => 'string|required',
         ],[
             'name.required' => 'حقل الاسم مطلوب.',
             'name.max' => 'يجب أن لا يتجاوز طول الاسم 255  .',
@@ -84,6 +86,7 @@ class BranchController extends BaseController
         $branch->name = $request->name;
         $branch->phonenumber = $request->phonenumber;
         $branch->city_id = $request->city_id;
+        $branch->address = $request->address;
         $branch->provider_id = auth("sanctum")->user()->provider_id;
         $branch->save();
 
@@ -103,6 +106,7 @@ class BranchController extends BaseController
             'name' => 'string|required|max:255',
             'phonenumber' => 'string|required|max:255',
             'city_id' => 'numeric|required|exists:cities,id',
+            'address' => 'string|required',
         ],[
             'name.required' => 'A name is required.',
             'name.max' => 'A name must not be greater than 255.',
@@ -123,6 +127,7 @@ class BranchController extends BaseController
             'name' => 'string|required|max:255',
             'phonenumber' => 'string|required|max:255',
             'city_id' => 'numeric|required|exists:cities,id',
+            'address' => 'string|required',
         ],[
             'name.required' => 'حقل الاسم مطلوب.',
             'name.max' => 'يجب أن لا يتجاوز طول الاسم 255  .',
@@ -148,6 +153,7 @@ class BranchController extends BaseController
         $branch->name = $request->name;
         $branch->phonenumber = $request->phonenumber;
         $branch->city_id = $request->city_id;
+        $branch->address = $request->address;
         $branch->save();
          
         $success['branch']=new BranchResource(Branch::find($branch->id));
