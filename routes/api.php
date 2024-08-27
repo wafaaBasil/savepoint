@@ -131,4 +131,11 @@ use App\Http\Controllers\API\AdminDashboard\CouponController;
             Route::put('users/update/{id}', 'update');
             Route::get('users/{status}/{id}', 'status');
         });
+        
+        Route::controller(\App\Http\Controllers\API\ProviderDashboard\BranchController::class)->group(function () {
+            Route::get('branches', 'index');
+            Route::post('branches/create', 'create');
+            Route::put('branches/update/{id}', 'update');
+            Route::get('branches/{status}/{id}', 'status');
+        });
     });

@@ -40,9 +40,7 @@ class BranchController extends BaseController
         $validator_en =  Validator::make($input ,[
             'name' => 'string|required|max:255',
             'phonenumber' => 'string|required|max:255',
-            'email' => 'email|required|unique:branchs,email',
-            'branch_id' => 'numeric|required|exists:branches,id',
-            'active' => 'required|boolean',
+            'city_id' => 'numeric|required|exists:cities,id',
         ],[
             'name.required' => 'A name is required.',
             'name.max' => 'A name must not be greater than 255.',
@@ -55,16 +53,12 @@ class BranchController extends BaseController
             'branch_id.required' => 'A branch is required.',
             'branch_id.numeric' => 'A branch must be a number.',
             'branch_id.exists' => 'A branch not valid.',
-            'active.required' => 'A active is required.',
-            'active.boolean' => 'The active must be a boolean.',
         ]);
 
         $validator =  Validator::make($input ,[
             'name' => 'string|required|max:255',
             'phonenumber' => 'string|required|max:255',
-            'email' => 'email|required|unique:branchs,email',
-            'branch_id' => 'numeric|required|exists:branches,id',
-            'active' => 'required|boolean',
+            'city_id' => 'numeric|required|exists:cities,id',
         ],[
             'name.required' => 'حقل الاسم مطلوب.',
             'name.max' => 'يجب أن لا يتجاوز طول الاسم 255  .',
@@ -88,11 +82,9 @@ class BranchController extends BaseController
         
         $branch = new Branch();
         $branch->name = $request->name;
-        $branch->email = $request->email;
         $branch->phonenumber = $request->phonenumber;
-        $branch->branch_id = $request->branch_id;
+        $branch->city_id = $request->city_id;
         $branch->provider_id = auth("sanctum")->user()->provider_id;
-        $branch->active = $request->active;
         $branch->save();
 
         $success['branch']=new BranchResource(Branch::find($branch->id));
@@ -110,9 +102,7 @@ class BranchController extends BaseController
         $validator_en =  Validator::make($input ,[
             'name' => 'string|required|max:255',
             'phonenumber' => 'string|required|max:255',
-            'email' => 'email|required|unique:branchs,email,'.$branch->id.',id',
-            'branch_id' => 'numeric|required|exists:branches,id',
-            'active' => 'required|boolean',
+            'city_id' => 'numeric|required|exists:cities,id',
         ],[
             'name.required' => 'A name is required.',
             'name.max' => 'A name must not be greater than 255.',
@@ -132,9 +122,7 @@ class BranchController extends BaseController
         $validator =  Validator::make($input ,[
             'name' => 'string|required|max:255',
             'phonenumber' => 'string|required|max:255',
-            'email' => 'email|required|unique:branchs,email,'.$branch->id.',id',
-            'branch_id' => 'numeric|required|exists:branches,id',
-            'active' => 'required|boolean',
+            'city_id' => 'numeric|required|exists:cities,id',
         ],[
             'name.required' => 'حقل الاسم مطلوب.',
             'name.max' => 'يجب أن لا يتجاوز طول الاسم 255  .',
@@ -156,11 +144,10 @@ class BranchController extends BaseController
             return $this->sendValidationError($validator->errors(),$validator_en->errors());
         }
         
+        
         $branch->name = $request->name;
-        $branch->email = $request->email;
         $branch->phonenumber = $request->phonenumber;
-        $branch->branch_id = $request->branch_id;
-        $branch->active = $request->active;
+        $branch->city_id = $request->city_id;
         $branch->save();
          
         $success['branch']=new BranchResource(Branch::find($branch->id));

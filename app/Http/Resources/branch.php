@@ -27,7 +27,7 @@ class Branch extends JsonResource
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
             'provider' => $this->provider,
-            'city' => $this->city,
+            'city' => new City($this->city),
             'created_at' =>Carbon::parse($this->created_at)->isoFormat('a h:m - YYYY/D ، MMMM'),
             'active' => (bool)$this->active,
         ];
