@@ -101,6 +101,9 @@ class BranchController extends BaseController
         $input = $request->all();
     
         $branch = Branch::find($id);
+        if(is_null($branch)){
+            return $this->sendError('الفرع غير موجود','Branch not Found!',404);
+        }
         
         $validator_en =  Validator::make($input ,[
             'name' => 'string|required|max:255',
@@ -166,9 +169,11 @@ class BranchController extends BaseController
     {
         $branch = Branch::find($id);
        
+        
         if(is_null($branch)){
             return $this->sendError('الفرع غير موجود','Branch not Found!',404);
         }
+        
         if($status == 'delete'){
            $branch->images()->delete();
            $branch->options()->delete();
