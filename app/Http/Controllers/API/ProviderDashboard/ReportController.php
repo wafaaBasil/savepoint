@@ -7,6 +7,8 @@ use App\Models\Branch;
 use App\Models\Order;
 use App\Models\Provider;
 use App\Models\User;
+use App\Http\Resources\User as UserResource;
+use App\Http\Resources\Branch as BranchResource;
 use Illuminate\Http\Request;
 use App\Models\Rating;
 use Validator;
@@ -48,13 +50,13 @@ class ReportController extends BaseController
         $success['pending_order_percent']=$provider->pending_order_percent();
         $success['completed_order_percent']=$provider->completed_order_percent();
 
-        $success['customers']= User::where('user_type','customer')->whereHas('customer_orders.provider', function ($query){
+        $success['customers']= UserResource::collection(User::where('user_type','customer')->whereHas('customer_orders.provider', function ($query){
             $query->where('id', auth("sanctum")->user()->provider_id)->orderBy('order_price','desc');
-        })->take(5)->get();
+        })->take(5)->get());
 
-        $success['branches']= Branch::whereHas('orders.provider', function ($query){
+        $success['branches']= BranchResource::collection(Branch::whereHas('orders.provider', function ($query){
             $query->where('id', auth("sanctum")->user()->provider_id)->orderBy('order_price','desc');
-        })->take(5)->get();
+        })->take(5)->get());
 
         $success['status']= 200;
 
