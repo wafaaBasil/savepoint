@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('customer_id');
             $table->integer('provider_id');
+            $table->integer('branch_id');
             $table->integer('delivery_id');
             $table->integer('payment_method_id')->nullable();
             $table->double('order_price');
