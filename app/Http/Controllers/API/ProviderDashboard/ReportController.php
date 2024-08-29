@@ -49,12 +49,12 @@ class ReportController extends BaseController
         $success['completed_order_percent']=$provider->completed_order_percent();
 
         $success['customers']= User::where('user_type','customer')->whereHas('customer_orders.provider', function ($query){
-            $query->where('id', auth("sanctum")->user()->provider_id);
-        })->orderBy('customer_orders.order_price','desc')->take(5)->get();
+            $query->where('id', auth("sanctum")->user()->provider_id)->orderBy('order_price','desc');
+        })->take(5)->get();
 
         $success['branches']= Branch::whereHas('orders.provider', function ($query){
-            $query->where('id', auth("sanctum")->user()->provider_id);
-        })->orderBy('orders.order_price','desc')->take(5)->get();
+            $query->where('id', auth("sanctum")->user()->provider_id)->orderBy('order_price','desc');
+        })->take(5)->get();
 
         $success['status']= 200;
 
