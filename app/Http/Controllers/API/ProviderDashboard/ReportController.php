@@ -50,11 +50,11 @@ class ReportController extends BaseController
 
         $success['customers']= User::where('user_type','customer')->whereHas('customer_orders.provider', function ($query){
             $query->where('id', auth("sanctum")->user()->provider_id);
-        })->orderBy('customer_orders.order_price','desc')->take(5);
+        })->orderBy('customer_orders.order_price','desc')->get(5);
 
         $success['branches']= Branch::whereHas('orders.provider', function ($query){
             $query->where('id', auth("sanctum")->user()->provider_id);
-        })->orderBy('orders.order_price','desc')->take(5);
+        })->orderBy('orders.order_price','desc')->get(5);
 
         $success['status']= 200;
 
