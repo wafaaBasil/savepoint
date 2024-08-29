@@ -138,4 +138,9 @@ use App\Http\Controllers\API\AdminDashboard\CouponController;
             Route::put('branches/update/{id}', 'update');
             Route::get('branches/{status}/{id}', 'status');
         });
+
+        
+        Route::controller(\App\Http\Controllers\API\ProviderDashboard\ReportController::class)->group(function () {
+            Route::get('reports', 'index');
+        });
     });
