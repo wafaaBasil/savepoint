@@ -30,6 +30,8 @@ class Branch extends JsonResource
             'city' => new City($this->city),
             'created_at' =>Carbon::parse($this->created_at)->isoFormat('a h:m - YYYY/D ، MMMM'),
             'active' => (bool)$this->active,
+            'order_count' => $this->orders->count(),
+            'order_monthly' => $this->order_monthly(),
         ];
     }
 }

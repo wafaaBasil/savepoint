@@ -116,7 +116,7 @@ class Provider extends Model
         if($this->hasMany(Order::class)->count() == 0){
             return 0;
         }
-        return $this->hasMany(Order::class)->where('status','التوصيل')->count()/$this->hasMany(Order::class)->count();
+        return $this->hasMany(Order::class)->where('status','التوصيل')->count()/$this->hasMany(Order::class)->count()*100;
     }
 
     
@@ -125,7 +125,7 @@ class Provider extends Model
         if($this->hasMany(Order::class)->count() == 0){
             return 0;
         }
-        return $this->hasMany(Order::class)->where('status','جاري التجهيز')->count()/$this->hasMany(Order::class)->count();
+        return $this->hasMany(Order::class)->where('status','جاري التجهيز')->count()/$this->hasMany(Order::class)->count()*100;
     }
 
     
@@ -134,7 +134,7 @@ class Provider extends Model
         if($this->hasMany(Order::class)->count() == 0){
             return 0;
         }
-        return $this->hasMany(Order::class)->where('status','تم التوصيل')->count()/$this->hasMany(Order::class)->count();
+        return $this->hasMany(Order::class)->where('status','تم التوصيل')->count()/$this->hasMany(Order::class)->count()*100;
     }
 
     public function main(): BelongsTo
