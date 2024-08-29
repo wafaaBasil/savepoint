@@ -19,14 +19,6 @@ class ReportController extends BaseController
 {
     public function index(Request $request)
     {
-        if($request->page == null){
-            $ratings = Rating::where('provider_id',auth("sanctum")->user()->provider_id)->orderBy('created_at','desc')->get();
-            $page_count = null;
-        }else{
-            $ratings = Rating::where('provider_id',auth("sanctum")->user()->provider_id)->orderBy('created_at','desc')->paginate(10);
-            $page_count = $ratings->lastPage();
-        }
-
         $success['customers_total']=User::where('user_type','customer')->whereHas('customer_orders.provider', function ($query){
             $query->where('id', auth("sanctum")->user()->provider_id);
         })->count();
@@ -61,6 +53,18 @@ class ReportController extends BaseController
         $success['status']= 200;
 
          return $this->sendResponse($success,'تم ارجاع التقارير بنجاح','Reports returned successfully');
+    }
+
+    public function financial(Request $request)
+    {
+        $success['currently_available_balance']=Order::where('provider_id',auth("sanctum")->user()->provider_id)->sum('order_price');
+        $success['profits_total']=Order::where('provider_id',auth("sanctum")->user()->provider_id)->sum('order_price');
+        $success['revenues_total']=1111;
+        $success['expenses_total']=Order::where('provider_id',auth("sanctum")->user()->provider_id)->sum('order_price');
+
+        $success['status']= 200;
+
+         return $this->sendResponse($success,'تم ارجاع المالية بنجاح','financial returned successfully');
     }
 
 

@@ -142,5 +142,7 @@ use App\Http\Controllers\API\AdminDashboard\CouponController;
         
         Route::controller(\App\Http\Controllers\API\ProviderDashboard\ReportController::class)->group(function () {
             Route::get('reports', 'index');
+            Route::get('financial', 'financial');
+            
         });
     });
