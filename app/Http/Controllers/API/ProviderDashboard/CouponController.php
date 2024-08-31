@@ -141,7 +141,7 @@ class CouponController extends BaseController
         $coupon->active = $request->active;
         $coupon->save();
          
-        $success['coupon']=new CouponResource($coupon);
+        $success['coupon']=new CouponResource(Coupon::find($coupon->id));
         $success['status']= 200;    
 
         return $this->sendResponse($success,'تم اضافة كوبون جديد بنجاح','Coupon created Successfully');
