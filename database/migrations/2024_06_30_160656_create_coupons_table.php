@@ -19,11 +19,13 @@ return new class extends Migration
             $table->enum('type',['percent','fixed','product','customer'])->default('percent');
             $table->double('discount')->nullable();
             $table->double('top_discount')->nullable();
+            $table->double('min_bill')->nullable();
             $table->integer('provider_id');
             $table->integer('branch_id');
             $table->integer('product_id')->nullable();
             $table->integer('customer_id')->nullable();
             $table->timestamp('end_date');
+            $table->integer('num_of_use_person')->nullable();
             $table->integer('num_of_use')->nullable();
             $table->boolean('active')->default(1);
             $table->enum('status', ['new', 'accept', 'reject'])->default('new');

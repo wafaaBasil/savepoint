@@ -25,17 +25,20 @@ use App\Http\Controllers\API\AdminDashboard\CouponController;
 
     Route::group([      
         'middleware' => 'api',    
-        'prefix' => 'password'
+        'prefix' => 'reset-password'
     ], function () {    
         Route::controller(PasswordResetController::class)->group(function () {
-        Route::post('create', 'create')/*->middleware(ThrottleRequests::class)*/;
+        /*Route::post('create', 'create')->middleware(ThrottleRequests::class);
         Route::get('find/{token}', 'find');
         Route::post('verify', 'verifyContact');
+        Route::post('reset', 'reset');*/
+        Route::post('verify-phonenumber', 'create')/*->middleware(ThrottleRequests::class)*/;
+        Route::get('find/{token}', 'find');
+        Route::post('verify-otp', 'verifyContact');
         Route::post('reset', 'reset');
     });
 });
     
-
     Route::prefix("admin-dashboard")->middleware('auth:sanctum')->group(function () {
         Route::controller(CustomerController::class)->group(function () {
             Route::get('customers', 'index');

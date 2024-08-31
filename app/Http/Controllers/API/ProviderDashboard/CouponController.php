@@ -41,13 +41,14 @@ class CouponController extends BaseController
             'name' => 'string|required|unique:coupons,name',
             'type' => 'required|in:percent,fixed,product,customer',
             'discount' => 'required',
-            'top_discount' => 'required_if:type,==,percent,fixed,customer',
+            'top_discount' => 'required_if:type,==,percent',
             //'provider_id' => 'numeric|required',
             'branch_id' => 'numeric|required',
             'product_id' => 'numeric|required_if:type,==,product',
             'customer_id' => 'numeric|required_if:type,==,customer',
             'end_date' => 'required|date',
-            'num_of_use' => 'numeric|required_if:coupon_type,==,coupon',
+            'num_of_use' => 'numeric',
+            'num_of_use_person' => 'numeric',
             'active' => 'required|boolean',
         ],[
             'coupon_type.required' => 'A coupon type is required.',
@@ -83,12 +84,14 @@ class CouponController extends BaseController
             'name' => 'string|required|unique:coupons,name',
             'type' => 'required|in:percent,fixed,product,customer',
             'discount' => 'required',
-            'top_discount' => 'required_if:type,==,percent,fixed,customer',
+            'top_discount' => 'required_if:type,==,percent',
+            //'provider_id' => 'numeric|required',
             'branch_id' => 'numeric|required',
             'product_id' => 'numeric|required_if:type,==,product',
             'customer_id' => 'numeric|required_if:type,==,customer',
             'end_date' => 'required|date',
-            'num_of_use' => 'numeric|required_if:coupon_type,==,coupon',
+            'num_of_use' => 'numeric',
+            'num_of_use_person' => 'numeric',
             'active' => 'required|boolean',
         ],[
             'coupon_type.required' => 'حفل نوع الكوبون مطلوب.',
@@ -130,6 +133,7 @@ class CouponController extends BaseController
         $coupon->image = $request->image;
         $coupon->name = $request->name;
         $coupon->type = $request->type;
+        $coupon->min_bill = $request->min_bill;
         $coupon->discount = $request->discount;
         $coupon->top_discount = $request->top_discount;
         $coupon->end_date = $request->end_date;
@@ -138,6 +142,7 @@ class CouponController extends BaseController
         $coupon->product_id = $request->product_id;
         $coupon->customer_id = $request->customer_id;
         $coupon->num_of_use = $request->num_of_use;
+        $coupon->num_of_use_person = $request->num_of_use_person;
         $coupon->active = $request->active;
         $coupon->save();
          
