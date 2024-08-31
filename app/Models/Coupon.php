@@ -15,6 +15,15 @@ class Coupon extends Model
         return $this->belongsTo(Provider::class)->withTrashed();
     }
 
+    public function branch(): BelongsTo
+    {
+        return $this->belongsTo(Branch::class)->withTrashed();
+    }
+
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(User::class,'customer_id')->withTrashed();
+    }
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
