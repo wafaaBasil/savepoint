@@ -39,11 +39,13 @@ class CouponController extends BaseController
             'coupon_type' => 'required|in:coupon,advertisement',
             'image' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'name' => 'string|required|unique:coupons,name',
-            'type' => 'required|in:percent,fixed,product',
+            'type' => 'required|in:percent,fixed,product,customer',
             'discount' => 'required',
-            'top_discount' => 'required_if:type,==,percent',
+            'top_discount' => 'required_if:type,==,percent,fixed,customer',
             //'provider_id' => 'numeric|required',
+            'branch_id' => 'numeric|required',
             'product_id' => 'numeric|required_if:type,==,product',
+            'customer_id' => 'numeric|required_if:type,==,customer',
             'end_date' => 'required|date',
             'num_of_use' => 'numeric|required_if:coupon_type,==,coupon',
             'active' => 'required|boolean',
@@ -79,11 +81,12 @@ class CouponController extends BaseController
             'coupon_type' => 'required|in:coupon,advertisement',
             'image' => 'image|nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'name' => 'string|required|unique:coupons,name',
-            'type' => 'required|in:percent,fixed,product',
+            'type' => 'required|in:percent,fixed,product,customer',
             'discount' => 'required',
-            'top_discount' => 'required_if:type,==,percent',
-            //'provider_id' => 'numeric|required',
+            'top_discount' => 'required_if:type,==,percent,fixed,customer',
+            'branch_id' => 'numeric|required',
             'product_id' => 'numeric|required_if:type,==,product',
+            'customer_id' => 'numeric|required_if:type,==,customer',
             'end_date' => 'required|date',
             'num_of_use' => 'numeric|required_if:coupon_type,==,coupon',
             'active' => 'required|boolean',
@@ -122,6 +125,7 @@ class CouponController extends BaseController
         
         
         $coupon = new Coupon();
+
         $coupon->coupon_type = $request->coupon_type;
         $coupon->image = $request->image;
         $coupon->name = $request->name;
@@ -130,7 +134,9 @@ class CouponController extends BaseController
         $coupon->top_discount = $request->top_discount;
         $coupon->end_date = $request->end_date;
         $coupon->provider_id = auth("sanctum")->user()->provider_id;
+        $coupon->branch_id =  $request->branch_id;
         $coupon->product_id = $request->product_id;
+        $coupon->customer_id = $request->customer_id;
         $coupon->num_of_use = $request->num_of_use;
         $coupon->active = $request->active;
         $coupon->save();
@@ -254,7 +260,10 @@ class CouponController extends BaseController
             return $this->sendError('الكوبون غير موجود','Coupon not Found!',404);
         }
         if($status == 'delete'){
-           
+           if($coupon->status != 'new'){
+               
+            return $this->sendError('لا يمكن حذف الكوبون','Coupon cannot be deleted',422);
+           }
             $coupon->delete();
             $success['status']= 200;
             return $this->sendResponse($success,'تم حذف الكوبون بنجاح','Coupon deleted successfully');

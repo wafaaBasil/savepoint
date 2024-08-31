@@ -16,12 +16,12 @@ class CustomerController extends BaseController
     public function index(Request $request)
     {
         if($request->page == null){
-            $users = User::where('user_type','customer')->whereHas('customer_orders.provider', function ($query){
+            $users = User::where('user_type','customer')->where('active',1)->whereHas('customer_orders.provider', function ($query){
                 $query->where('id', auth("sanctum")->user()->provider_id);
             })->orderBy('created_at','desc')->get();
             $page_count = null;
         }else{
-            $users = User::where('user_type','customer')->whereHas('customer_orders.provider', function ($query){
+            $users = User::where('user_type','customer')->where('active',1)->whereHas('customer_orders.provider', function ($query){
                 $query->where('id', auth("sanctum")->user()->provider_id);
             })->orderBy('created_at','desc')->paginate(10);
             $page_count = $users->lastPage();
