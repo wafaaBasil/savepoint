@@ -21,7 +21,7 @@ return new class extends Migration
             $table->double('top_discount')->nullable();
             $table->double('min_bill')->nullable();
             $table->integer('provider_id');
-            $table->integer('branch_id');
+            $table->integer('branch_id')->nullable();
             $table->integer('product_id')->nullable();
             $table->integer('customer_id')->nullable();
             $table->timestamp('end_date');

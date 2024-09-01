@@ -27,6 +27,8 @@ class Coupon extends JsonResource
             'top_discount' => (string)$this->top_discount,
             'end_date' => $this->end_date,
             'num_of_use' => $this->num_of_use,
+            'num_of_use_person' => $this->num_of_use_person,
+            'min_bill' => $this->min_bill,
             'active' => (bool)$this->active,
             'status' => $this->status,
             'provider' => new Provider($this->provider),
