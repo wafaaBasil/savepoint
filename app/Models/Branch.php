@@ -22,6 +22,11 @@ class Branch extends Model
         return $this->hasMany(Order::class);
     }
 
+    public function workingHours(): HasMany
+    {
+        return $this->hasMany(WorkingHours::class);
+    }
+
     public function order_monthly()
     {
         

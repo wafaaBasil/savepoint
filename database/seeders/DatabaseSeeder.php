@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RatingSeeder::class);
         $this->call(CouponSeeder::class);
         $this->call(OrderProductSeeder::class);
+        $this->call(DaySeeder::class);
        //$this->call(ProductSeeder::class);
         /*
         User::factory()->create([

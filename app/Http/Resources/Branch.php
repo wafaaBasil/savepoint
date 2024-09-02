@@ -28,6 +28,7 @@ class Branch extends JsonResource
             'longitude' => $this->longitude,
             'provider' => $this->provider,
             'city' => new City($this->city),
+            'workingHours' => WorkingHours::collection($this->workingHours),
             'created_at' =>Carbon::parse($this->created_at)->isoFormat('a h:m - YYYY/D ، MMMM'),
             'active' => (bool)$this->active,
             'order_count' => $this->orders->count(),

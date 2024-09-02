@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\ProviderDashboard;
 use App\Http\Controllers\Controller;
 use App\Models\BranchImage;
 use App\Models\BranchOption;
+use App\Models\WorkingHours;
 use Illuminate\Http\Request;
 use App\Models\Branch;
 use Validator;
@@ -42,6 +43,13 @@ class BranchController extends BaseController
             'phonenumber' => 'string|required|max:255',
             'address' => 'string|required',
             'city_id' => 'numeric|required|exists:cities,id',
+            'workingHours' => 'array|required',
+            'workingHours.*.day_id' => 'numeric|required|exists:days,id',
+            'workingHours.*.mode' => 'string|required||in:specificHours,closed,alwaysOpen',
+            'workingHours.*.morningStart' => 'nullable',
+            'workingHours.*.morningEnd' => 'nullable',
+            'workingHours.*.eveningStart' => 'nullable',
+            'workingHours.*.eveningEnd' => 'nullable',
         ],[
             'name.required' => 'A name is required.',
             'name.max' => 'A name must not be greater than 255.',
@@ -61,6 +69,13 @@ class BranchController extends BaseController
             'phonenumber' => 'string|required|max:255',
             'city_id' => 'numeric|required|exists:cities,id',
             'address' => 'string|required',
+            'workingHours' => 'array|required',
+            'workingHours.*.day_id' => 'numeric|required|exists:days,id',
+            'workingHours.*.mode' => 'string|required||in:specificHours,closed,alwaysOpen',
+            'workingHours.*.morningStart' => 'nullable',
+            'workingHours.*.morningEnd' => 'nullable',
+            'workingHours.*.eveningStart' => 'nullable',
+            'workingHours.*.eveningEnd' => 'nullable',
         ],[
             'name.required' => 'حقل الاسم مطلوب.',
             'name.max' => 'يجب أن لا يتجاوز طول الاسم 255  .',
@@ -90,6 +105,18 @@ class BranchController extends BaseController
         $branch->provider_id = auth("sanctum")->user()->provider_id;
         $branch->save();
 
+        foreach($request->workingHours as $workingHour){
+            $working_hours = new WorkingHours();
+            $working_hours->day_id = $workingHour['day_id'];
+            $working_hours->mode = $workingHour['mode'];
+            $working_hours->morningStart = $workingHour['morningStart'];
+            $working_hours->morningEnd = $workingHour['morningEnd'];
+            $working_hours->eveningStart = $workingHour['eveningStart'];
+            $working_hours->eveningEnd = $workingHour['eveningEnd'];
+            $working_hours->branch_id = $branch->id;
+            $working_hours->save();
+        }
+
         $success['branch']=new BranchResource(Branch::find($branch->id));
         $success['status']= 200;    
 
@@ -110,6 +137,13 @@ class BranchController extends BaseController
             'phonenumber' => 'string|required|max:255',
             'city_id' => 'numeric|required|exists:cities,id',
             'address' => 'string|required',
+            'workingHours' => 'array|required',
+            'workingHours.*.day_id' => 'numeric|required|exists:days,id',
+            'workingHours.*.mode' => 'string|required||in:specificHours,closed,alwaysOpen',
+            'workingHours.*.morningStart' => 'nullable',
+            'workingHours.*.morningEnd' => 'nullable',
+            'workingHours.*.eveningStart' => 'nullable',
+            'workingHours.*.eveningEnd' => 'nullable',
         ],[
             'name.required' => 'A name is required.',
             'name.max' => 'A name must not be greater than 255.',
@@ -131,6 +165,13 @@ class BranchController extends BaseController
             'phonenumber' => 'string|required|max:255',
             'city_id' => 'numeric|required|exists:cities,id',
             'address' => 'string|required',
+            'workingHours' => 'array|required',
+            'workingHours.*.day_id' => 'numeric|required|exists:days,id',
+            'workingHours.*.mode' => 'string|required||in:specificHours,closed,alwaysOpen',
+            'workingHours.*.morningStart' => 'nullable',
+            'workingHours.*.morningEnd' => 'nullable',
+            'workingHours.*.eveningStart' => 'nullable',
+            'workingHours.*.eveningEnd' => 'nullable',
         ],[
             'name.required' => 'حقل الاسم مطلوب.',
             'name.max' => 'يجب أن لا يتجاوز طول الاسم 255  .',
@@ -158,6 +199,16 @@ class BranchController extends BaseController
         $branch->city_id = $request->city_id;
         $branch->address = $request->address;
         $branch->save();
+
+        foreach($request->workingHours as $workingHour){
+            $branch->workingHours->where('day_id',$workingHour['day_id'])->update([
+                'mode' =>$workingHour['mode'],
+                'morningStart' =>$workingHour['morningStart'],
+                'morningEnd' =>$workingHour['morningEnd'],
+                'eveningStart' =>$workingHour['eveningStart'],
+                'eveningEnd' =>$workingHour['eveningEnd'],
+            ]);
+        }
          
         $success['branch']=new BranchResource(Branch::find($branch->id));
         $success['status']= 200;    
@@ -175,9 +226,7 @@ class BranchController extends BaseController
         }
         
         if($status == 'delete'){
-           $branch->images()->delete();
-           $branch->options()->delete();
-           $branch->enhancements()->delete();
+           $branch->workingHours()->delete();
             $branch->delete();
             $success['status']= 200;
             return $this->sendResponse($success,'تم حذف الفرع بنجاح','Branch deleted successfully');
