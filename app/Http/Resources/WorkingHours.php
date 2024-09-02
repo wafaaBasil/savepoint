@@ -18,7 +18,9 @@ class WorkingHours extends JsonResource
             'day' => new Day($this->day),
             'mode' => $this->mode,
             'morningStart' => $this->morningStart,
-            'morningEnd'  => $this->morningEnd,
+            'morningEnd'  => $this->morningEnd ? 
+           date('hh:mm',strtotime($this->morningEnd)):
+            $this->morningEnd,
             'eveningStart' => $this->eveningStart,
             'eveningEnd'  => $this->eveningEnd,
         ];
