@@ -201,7 +201,7 @@ class BranchController extends BaseController
         $branch->save();
 
         foreach($request->workingHours as $workingHour){
-            $branch->workingHours->where('day_id',$workingHour['day_id'])->update([
+            $branch->workingHours->where('day_id',$workingHour['day_id'])->first()->update([
                 'mode' =>$workingHour['mode'],
                 'morningStart' =>$workingHour['morningStart'],
                 'morningEnd' =>$workingHour['morningEnd'],
