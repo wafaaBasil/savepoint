@@ -17,12 +17,18 @@ class WorkingHours extends JsonResource
         return [
             'day' => new Day($this->day),
             'mode' => $this->mode,
-            'morningStart' => $this->morningStart,
+            'morningStart' => $this->morningStart ? 
+            date('h:m',strtotime($this->morningStart)):
+             $this->morningStart,
             'morningEnd'  => $this->morningEnd ? 
-           date('hh:mm',strtotime($this->morningEnd)):
+           date('h:m',strtotime($this->morningEnd)):
             $this->morningEnd,
-            'eveningStart' => $this->eveningStart,
-            'eveningEnd'  => $this->eveningEnd,
+            'eveningStart' => $this->eveningStart ? 
+            date('h:m',strtotime($this->eveningStart)):
+             $this->eveningStart,
+            'eveningEnd'  => $this->eveningEnd ? 
+            date('h:m',strtotime($this->eveningEnd)):
+             $this->eveningEnd,
         ];
     }
 }
