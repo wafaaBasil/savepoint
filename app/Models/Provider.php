@@ -156,4 +156,20 @@ class Provider extends Model
         $img = $logo?? 'male.jpeg';
         return asset('storage/images/providers') . '/' . $img;
     }
+
+    public function setCommercialRegisterAttribute($commercial_register)
+    {
+        if(gettype($commercial_register) != 'string') {
+            $i = $commercial_register->store('images/providers', 'public');
+            $this->attributes['commercial_register'] = $commercial_register->hashName();
+        } else {
+            $this->attributes['commercial_register'] = $commercial_register;
+        }
+    }
+
+    public function getCommercialRegisterAttribute($commercial_register)
+    {
+        $img = $commercial_register?? 'male.jpeg';
+        return asset('storage/images/providers') . '/' . $img;
+    }
 }

@@ -4,6 +4,7 @@ use App\Http\Middleware\ThrottleRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\API\AdminDashboard\OrderController;
 use App\Http\Controllers\API\AdminDashboard\CustomerController;
 use App\Http\Controllers\API\PasswordResetController;
@@ -21,6 +22,9 @@ use App\Http\Controllers\API\AdminDashboard\CouponController;
     Route::controller(AuthController::class)->group(function () {
         Route::post('login', 'login')->name('login');
         Route::get('logout', 'logout')->name('logout');
+    });
+    Route::controller(RegisterController::class)->group(function () {
+        Route::post('provider/register', 'register_provider');
     });
 
     Route::group([      

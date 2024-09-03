@@ -117,7 +117,7 @@ class UserController extends BaseController
 
         $validator_en =  Validator::make($input ,[
             'name' => 'string|required|max:255',
-            'phonenumber' => 'string|required|max:255',
+            'phonenumber' => 'string|required|max:255|unique:users,phonenumber',
             'email' => 'email|required|unique:users,email,'.$user->id.',id',
             'branch_id' => 'numeric|required|exists:branches,id',
             'active' => 'required|boolean',
@@ -140,7 +140,7 @@ class UserController extends BaseController
 
         $validator =  Validator::make($input ,[
             'name' => 'string|required|max:255',
-            'phonenumber' => 'string|required|max:255',
+            'phonenumber' => 'string|required|max:255|unique:users,phonenumber',
             'email' => 'email|required|unique:users,email,'.$user->id.',id',
             'branch_id' => 'numeric|required|exists:branches,id',
             'active' => 'required|boolean',
